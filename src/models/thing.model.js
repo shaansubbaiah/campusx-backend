@@ -10,9 +10,6 @@ module.exports = (sequelize, Sequelize) => {
         },
         sem: {
             type: Sequelize.STRING
-        },
-        phone: {
-            type: Sequelize.NUMBER(10)
         }
     });
 };

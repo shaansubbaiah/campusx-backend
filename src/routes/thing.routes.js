@@ -21,5 +21,5 @@ module.exports = app => {
     // create a new Thing
     router.delete("/", things.deleteAll);
 
-    app.use('./api/things', router);
+    app.use('/api/things', router);
 }
