@@ -10,6 +10,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         sem: {
             type: Sequelize.STRING
+        },
+        phone: {
+            type: Sequelize.BIGINT(10)
         }
     });
 };

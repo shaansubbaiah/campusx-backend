@@ -15,7 +15,8 @@ exports.create = (req, res) => {
     const thing = {
         title: req.body.title,
         branch: req.body.branch,
-        sem: req.body.sem
+        sem: req.body.sem,
+        phone: req.body.phone
     };
 
     // save Thing in db
