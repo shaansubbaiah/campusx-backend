@@ -34,9 +34,15 @@ exports.create = (req, res) => {
 // retrieve all Things from db
 exports.findAll = (req, res) => {
     const title = req.query.title;
-    let condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+    const sem = req.query.sem;
+    const branch = req.query.branch;
 
-    Thing.findAll({ where: condition })
+    let matchTitle = title ? { title: { [Op.like]: `%${title}%` } } : null;
+    let matchSem = sem ? { sem: { [Op.like]: `%${sem}%` } } : null;
+    let matchBranch = branch ? { branch: { [Op.like]: `%${branch}%` } } : null;
+
+    Thing.findAll({where: { [Op.and]: [matchTitle, matchSem, matchBranch] }
+        })
         .then(data => {
             res.send(data);
         })
