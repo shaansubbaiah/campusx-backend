@@ -17,16 +17,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 const db = require('./models');
-// db.sequelize.sync({force: true}).then(() => {
-//     console.log('Drop and re-sync db');
-// });
-db.sequelize.sync()
-    .then(() => {
-        console.log('Synced DB');
-    })
-    .catch(err => {
-        console.error(err);
-    });
+db.sequelize.sync({force: true}).then(() => {
+    console.log('Drop and re-sync db');
+});
+// db.sequelize.sync()
+//     .then(() => {
+//         console.log('Synced DB');
+//     })
+//     .catch(err => {
+//         console.error(err);
+//     });
 
 
 // routes
@@ -35,6 +35,8 @@ app.get('/', (req, res) => {
 });
 
 require('./routes/thing.routes')(app);
+require('./routes/user.routes')(app);
+
 
 // set port listen to requests
 const PORT = process.env.PORT || 8080;

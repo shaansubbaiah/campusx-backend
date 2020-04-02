@@ -22,4 +22,4 @@ module.exports = app => {
     router.delete("/", things.deleteAll);
 
     app.use('/api/things', router);
-}
+};

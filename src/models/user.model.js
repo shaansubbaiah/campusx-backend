@@ -1,25 +1,22 @@
 module.exports = (sequelize, Sequelize) => {
-    return sequelize.define("thing", {
+    return sequelize.define("user", {
         // Sequelize also defines by default the fields id (primary key),
         // createdAt and updatedAt to every model.
-        thingId: {
+        userId: {
             type: Sequelize.INTEGER(4),
             primaryKey: true
         },
-        title: {
+        name: {
             type: Sequelize.STRING
         },
-        branch: {
-            type: Sequelize.STRING
-        },
-        sem: {
-            type: Sequelize.STRING
-        },
-        image: {
-            type: Sequelize.TEXT,
+        email: {
+            type: Sequelize.STRING,
             validate: {
-                isURL: true
+                isEmail: true,
             }
+        },
+        phone: {
+            type: Sequelize.BIGINT(10)
         }
     });
 };
