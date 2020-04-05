@@ -1,5 +1,6 @@
 const db = require('../models');
 const User = db.users;
+const Thing = db.things;
 const Op = db.Sequelize.Op;
 
 // create and save a new User
@@ -58,6 +59,22 @@ exports.findOne = (req, res) => {
             })
         })
 };
+
+// find all things of a User by id
+exports.findUserThings = (req, res) => {
+    const userId = req.params.userId;
+
+    Thing.findAll({where: { ownerId: userId }
+        })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || `Error occurred while searching User's things.`
+            });
+        });
+}
 
 // update a User by userId in request
 exports.update = (req, res) => {

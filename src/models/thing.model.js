@@ -6,6 +6,9 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER(4),
             primaryKey: true
         },
+        ownerId: {
+            type: Sequelize.INTEGER(4),
+        },
         title: {
             type: Sequelize.STRING
         },
