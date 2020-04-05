@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
     dialect: dbConfig.dialect,
-    operatorsAliases: false,
+    operatorAliases: false,
 
     pool: {
         max: dbConfig.pool.max,
@@ -20,12 +20,10 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.things = require('./thing.model.js')(sequelize, Sequelize);
 db.users = require('./user.model.js')(sequelize, Sequelize);
+db.things = require('./thing.model.js')(sequelize, Sequelize);
 
-db.users.hasMany(db.things, {
-    foreignKey: 'userId'
-});
+db.users.hasMany(db.things);
 db.things.belongsTo(db.users);
 
 module.exports = db;

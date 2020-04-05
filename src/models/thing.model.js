@@ -1,14 +1,9 @@
+const db = require('../models');
+const User = db.users;
 module.exports = (sequelize, Sequelize) => {
     return sequelize.define("thing", {
         // Sequelize also defines by default the fields id (primary key),
         // createdAt and updatedAt to every model.
-        thingId: {
-            type: Sequelize.INTEGER(4),
-            primaryKey: true
-        },
-        ownerId: {
-            type: Sequelize.INTEGER(4),
-        },
         title: {
             type: Sequelize.STRING
         },

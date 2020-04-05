@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 
 // create and save a new Thing
 exports.create = (req, res) => {
-    if(!req.body.thingId || !req.body.ownerId || !req.body.title || !req.body.branch || !req.body.sem) {
+    if(!req.body.title || !req.body.branch || !req.body.sem) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -13,12 +13,11 @@ exports.create = (req, res) => {
 
     // create Thing
     const thing = {
-        thingId: req.body.thingId,
-        ownerId: req.body.ownerId,
         title: req.body.title,
         branch: req.body.branch,
         sem: req.body.sem,
-        image: req.body.image
+        image: req.body.image,
+        userId: req.body.userId
     };
 
     // save Thing in db

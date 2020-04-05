@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 
 // create and save a new User
 exports.create = (req, res) => {
-    if(!req.body.userId || !req.body.name || !req.body.email || !req.body.phone) {
+    if(!req.body.name || !req.body.email || !req.body.phone) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -14,7 +14,6 @@ exports.create = (req, res) => {
 
     // create User
     const user = {
-        userId: req.body.userId,
         name: req.body.name,
         email: req.body.email,
         phone: req.body.phone
@@ -47,24 +46,24 @@ exports.findAll = (req, res) => {
 
 // find a single User by id
 exports.findOne = (req, res) => {
-    const userId = req.params.userId;
+    const id = req.params.id;
 
-    User.findByPk(userId)
+    User.findByPk(id)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || `Error retrieving User with userId:${userId}`
+                message: err.message || `Error retrieving User with id:${id}`
             })
         })
 };
 
 // find all things of a User by id
 exports.findUserThings = (req, res) => {
-    const userId = req.params.userId;
+    const id = req.params.id;
 
-    Thing.findAll({where: { ownerId: userId }
+    Thing.findAll({where: { userId: id }
         })
         .then(data => {
             res.send(data);
@@ -76,25 +75,25 @@ exports.findUserThings = (req, res) => {
         });
 }
 
-// update a User by userId in request
+// update a User by id in request
 exports.update = (req, res) => {
-    const userId = req.params.userId;
+    const id = req.params.id;
 
-    User.update(req.body, {where: {userId: userId}})
+    User.update(req.body, {where: {id: id}})
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: `User userId:${userId} updated successfully`
+                    message: `User id:${id} updated successfully`
                 });
             } else {
                 res.send({
-                    message: `Cannot update User with userId:${userId}. Not found or req.body empty!`
+                    message: `Cannot update User with id:${id}. Not found or req.body empty!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: `Error updating User userId:${userId}`
+                message: `Error updating User id:${id}`
             });
         });
 
@@ -102,23 +101,23 @@ exports.update = (req, res) => {
 
 // delete a User by id in request
 exports.delete = (req, res) => {
-    const userId = req.params.userId;
+    const id = req.params.id;
 
-    User.destroy({where: { userId: userId }})
+    User.destroy({where: { id: id }})
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: `User userId:${userId} deleted successfully`
+                    message: `User id:${id} deleted successfully`
                 });
             } else {
                 res.send({
-                    message: `Cannot delete User userId:${userId}. Maybe it was not found!`
+                    message: `Cannot delete User id:${id}. Maybe it was not found!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: `Could not delete User userId:${userId}`
+                message: `Could not delete User id:${id}`
             });
         });
 };

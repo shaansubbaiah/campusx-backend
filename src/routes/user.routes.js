@@ -10,16 +10,16 @@ module.exports = app => {
     userRouter.get('/', users.findAll);
 
     // retrieve a single User by id
-    userRouter.get("/:userId", users.findOne);
+    userRouter.get("/:id", users.findOne);
 
     // retrieve a single User's things by id
-    userRouter.get("/:userId/things", users.findUserThings);
+    userRouter.get("/:id/things", users.findUserThings);
 
     // update User with id
-    userRouter.put("/:userId", users.update);
+    userRouter.put("/:id", users.update);
 
     // delete User with id
-    userRouter.delete("/:userId", users.delete);
+    userRouter.delete("/:id", users.delete);
 
     // create a new User
     userRouter.delete("/", users.deleteAll);
