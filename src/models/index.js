@@ -20,10 +20,26 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.users = require('./user.model.js')(sequelize, Sequelize);
-db.things = require('./thing.model.js')(sequelize, Sequelize);
+db.users = require('./user.model')(sequelize, Sequelize);
+db.things = require('./thing.model')(sequelize, Sequelize);
+db.books = require('./book.model')(sequelize, Sequelize);
+db.others = require('./other.model')(sequelize, Sequelize);
+db.links = require('./link.model')(sequelize, Sequelize);
 
+// define relations ;)
 db.users.hasMany(db.things);
 db.things.belongsTo(db.users);
+
+db.things.hasOne(db.books);
+db.books.belongsTo(db.things);
+
+db.things.hasOne(db.books);
+db.books.belongsTo(db.things);
+
+db.things.hasOne(db.books);
+db.books.belongsTo(db.things);
+
+db.things.hasOne(db.books);
+db.books.belongsTo(db.things);
 
 module.exports = db;

@@ -4,7 +4,10 @@ module.exports = app => {
     let router = require('express').Router();
 
     // create a new Thing
-    router.post('/', things.create);
+    // router.post('/', things.create);
+    router.post('/upload-book', things.createBook);
+    router.post('/upload-link', things.createLink);
+    router.post('/upload-other', things.createOther);
 
     // retrieve all Things
     router.get('/', things.findAll);

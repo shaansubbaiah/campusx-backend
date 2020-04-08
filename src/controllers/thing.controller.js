@@ -1,5 +1,8 @@
 const db = require('../models');
 const Thing = db.things;
+const Book = db.books;
+const Link = db.links;
+const Other = db.others;
 const Op = db.Sequelize.Op;
 
 // create and save a new Thing
@@ -16,7 +19,6 @@ exports.create = (req, res) => {
         title: req.body.title,
         branch: req.body.branch,
         sem: req.body.sem,
-        image: req.body.image,
         userId: req.body.userId
     };
 
@@ -32,11 +34,105 @@ exports.create = (req, res) => {
         });
 };
 
+// create and  save a new Book
+exports.createBook = (req, res) => {
+    exports.create(req, res);
+
+    if(!req.body.author || !req.body.publisher || !req.body.image) {
+        res.status(400).send({
+            message: 'Content can\'t be empty!'
+        });
+        return;
+    }
+
+    // create Book
+    const book = {
+        author: req.body.author,
+        publisher: req.body.publisher,
+        image: req.body.image,
+        thingId: req.body.thingId
+    };
+
+    // save Thing in db
+    Book.create(book)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || `Error occurred while creating Book.`
+            });
+        });
+}
+
+// create and  save a new Link
+exports.createLink = (req, res) => {
+    exports.create(req, res);
+
+    if(!req.body.url || !req.body.description) {
+        res.status(400).send({
+            message: 'Content can\'t be empty!'
+        });
+        return;
+    }
+
+    // create Link
+    const link = {
+        url: req.body.url,
+        description: req.body.description,
+        thingId: req.body.thingId
+    };
+
+    // save Thing in db
+    Link.create(link)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || `Error occurred while creating Link.`
+            });
+        });
+}
+
+// create and  save a new Other
+exports.createOther = (req, res) => {
+    exports.create(req, res);
+
+    if(!req.body.description || !req.body.image) {
+        res.status(400).send({
+            message: 'Content can\'t be empty!'
+        });
+        return;
+    }
+
+    // create Other
+    const other = {
+        image: req.body.image,
+        description: req.body.description,
+        thingId: req.body.thingId
+    };
+
+    // save Thing in db
+    Other.create(other)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || `Error occurred while creating Other.`
+            });
+        });
+}
+
 // retrieve all Things from db
 exports.findAll = (req, res) => {
     const title = req.query.title;
     const sem = req.query.sem;
     const branch = req.query.branch;
+    const type = req.query.type;
+
+    // TODO: use type to search for books, other, links, etc
 
     let matchTitle = title ? { title: { [Op.like]: `%${title}%` } } : null;
     let matchSem = sem ? { sem: { [Op.like]: `%${sem}%` } } : null;
@@ -53,6 +149,8 @@ exports.findAll = (req, res) => {
             });
         });
 };
+
+// TODO: fix searching, deleting, etc for each type(for book, other, link, etc)
 
 // find a single Thing by id
 exports.findOne = (req, res) => {

@@ -1,14 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
-    return sequelize.define("thing", {
+    return sequelize.define("link", {
         // Sequelize also defines by default the fields id (primary key),
         // createdAt and updatedAt to every model.
-        title: {
+        url: {
             type: Sequelize.STRING
         },
-        branch: {
-            type: Sequelize.STRING
-        },
-        sem: {
+        description: {
             type: Sequelize.STRING
         }
     });
