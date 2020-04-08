@@ -6,7 +6,7 @@ module.exports = app => {
     // create a new Thing
     // router.post('/', things.create);
     router.post('/upload-book', things.createBook);
-    router.post('/upload-link', things.createLink);
+    router.post('/upload-drive', things.createDrive);
     router.post('/upload-other', things.createOther);
 
     // retrieve all Things

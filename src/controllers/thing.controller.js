@@ -1,12 +1,12 @@
 const db = require('../models');
 const Thing = db.things;
 const Book = db.books;
-const Link = db.links;
+const Drive = db.drives;
 const Other = db.others;
 const Op = db.Sequelize.Op;
 
 // create and save a new Thing
-exports.create = (req, res) => {
+createThing = (req, res) => {
     if(!req.body.title || !req.body.branch || !req.body.sem) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
@@ -25,7 +25,8 @@ exports.create = (req, res) => {
     // save Thing in db
     Thing.create(thing)
         .then(data => {
-            res.send(data);
+            // res.send(data);
+            return data.thingId;
         })
         .catch(err => {
             res.status(500).send({
@@ -36,7 +37,7 @@ exports.create = (req, res) => {
 
 // create and  save a new Book
 exports.createBook = (req, res) => {
-    exports.create(req, res);
+    let thingId = createThing(req, res);
 
     if(!req.body.author || !req.body.publisher || !req.body.image) {
         res.status(400).send({
@@ -50,10 +51,10 @@ exports.createBook = (req, res) => {
         author: req.body.author,
         publisher: req.body.publisher,
         image: req.body.image,
-        thingId: req.body.thingId
+        thingId: thingId
     };
 
-    // save Thing in db
+    // save Book in db
     Book.create(book)
         .then(data => {
             res.send(data);
@@ -65,9 +66,9 @@ exports.createBook = (req, res) => {
         });
 }
 
-// create and  save a new Link
-exports.createLink = (req, res) => {
-    exports.create(req, res);
+// create and  save a new Drive
+exports.createDrive = (req, res) => {
+    let thingId = createThing(req, res);
 
     if(!req.body.url || !req.body.description) {
         res.status(400).send({
@@ -76,28 +77,28 @@ exports.createLink = (req, res) => {
         return;
     }
 
-    // create Link
-    const link = {
+    // create Drive
+    const drive = {
         url: req.body.url,
         description: req.body.description,
-        thingId: req.body.thingId
+        thingId: thingId
     };
 
-    // save Thing in db
-    Link.create(link)
+    // save Drive in db
+    Drive.create(drive)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || `Error occurred while creating Link.`
+                message: err.message || `Error occurred while creating Drive.`
             });
         });
 }
 
 // create and  save a new Other
 exports.createOther = (req, res) => {
-    exports.create(req, res);
+    let thingId = createThing(req, res);
 
     if(!req.body.description || !req.body.image) {
         res.status(400).send({
@@ -110,10 +111,10 @@ exports.createOther = (req, res) => {
     const other = {
         image: req.body.image,
         description: req.body.description,
-        thingId: req.body.thingId
+        thingId: thingId
     };
 
-    // save Thing in db
+    // save Other in db
     Other.create(other)
         .then(data => {
             res.send(data);
@@ -132,13 +133,28 @@ exports.findAll = (req, res) => {
     const branch = req.query.branch;
     const type = req.query.type;
 
-    // TODO: use type to search for books, other, links, etc
-
     let matchTitle = title ? { title: { [Op.like]: `%${title}%` } } : null;
     let matchSem = sem ? { sem: { [Op.like]: `%${sem}%` } } : null;
     let matchBranch = branch ? { branch: { [Op.like]: `%${branch}%` } } : null;
 
-    Thing.findAll({where: { [Op.and]: [matchTitle, matchSem, matchBranch] }
+    let model;
+    if(type == 'book')
+        model = Book;
+    else if(type == 'other')
+        model = Other;
+    else if(type == 'drive')
+        model = Drive;
+    else
+        model = Thing; // fix this :/
+
+    model.findAll({
+            where: {
+                [Op.and]: [matchTitle, matchSem, matchBranch]
+            },
+            // include: [{
+            //     model: model,
+            //     // where: { thingId: Sequelize.col('id') }
+            // }]
         })
         .then(data => {
             res.send(data);
@@ -150,7 +166,7 @@ exports.findAll = (req, res) => {
         });
 };
 
-// TODO: fix searching, deleting, etc for each type(for book, other, link, etc)
+// TODO: fix searching, deleting, etc for each type(for book, other, drive, etc)
 
 // find a single Thing by id
 exports.findOne = (req, res) => {
