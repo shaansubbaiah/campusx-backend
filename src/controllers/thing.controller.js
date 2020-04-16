@@ -6,7 +6,7 @@ const Other = db.others;
 const Op = db.Sequelize.Op;
 
 // create and save a new Thing
-createThing = async (req) => {
+createThing = async (req, res) => {
     if (!req.body.title || !req.body.branch || !req.body.sem) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
@@ -39,7 +39,7 @@ createThing = async (req) => {
 
 // create and  save a new Book
 exports.createBook = async (req, res) => {
-    let thingId = await createThing(req);
+    let thingId = await createThing(req, res);
 
     if (!req.body.author || !req.body.publisher || !req.body.image) {
         res.status(400).send({
@@ -70,7 +70,7 @@ exports.createBook = async (req, res) => {
 
 // create and  save a new Drive
 exports.createDrive = async (req, res) => {
-    let thingId = await createThing(req);
+    let thingId = await createThing(req, res);
 
     if (!req.body.url || !req.body.description) {
         res.status(400).send({
@@ -100,7 +100,7 @@ exports.createDrive = async (req, res) => {
 
 // create and  save a new Other
 exports.createOther = async (req, res) => {
-    let thingId = await createThing(req);
+    let thingId = await createThing(req, res);
 
     if (!req.body.description || !req.body.image) {
         res.status(400).send({
