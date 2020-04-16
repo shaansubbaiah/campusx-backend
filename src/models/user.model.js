@@ -11,6 +11,9 @@ module.exports = (sequelize, Sequelize) => {
                 isEmail: true,
             }
         },
+        // password: {
+        //     type: Sequelize.STRING
+        // },
         phone: {
             type: Sequelize.BIGINT(10)
         }

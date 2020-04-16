@@ -14,24 +14,24 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require('./models');
-// db.sequelize.sync({force: true}).then(() => {
-//     console.log('Drop and re-sync db');
-// });
-db.sequelize.sync()
-    .then(() => {
-        console.log('Synced DB');
-    })
-    .catch(err => {
-        console.error(err);
-    });
+db.sequelize.sync({ force: true }).then(() => {
+    console.log('Drop and re-sync db');
+});
+// db.sequelize.sync()
+//     .then(() => {
+//         console.log('Synced DB');
+//     })
+//     .catch(err => {
+//         console.error(err);
+//     });
 
 
 // routes
 app.get('/', (req, res) => {
-    res.json({message: "Welcome to the app :)"})
+    res.json({ message: "Welcome to the app :)" })
 });
 
 require('./routes/thing.routes')(app);

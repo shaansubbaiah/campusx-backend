@@ -6,8 +6,8 @@ const Other = db.others;
 const Op = db.Sequelize.Op;
 
 // create and save a new Thing
-createThing = (req, res) => {
-    if(!req.body.title || !req.body.branch || !req.body.sem) {
+createThing = async (req) => {
+    if (!req.body.title || !req.body.branch || !req.body.sem) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -22,24 +22,26 @@ createThing = (req, res) => {
         userId: req.body.userId
     };
 
+    let id;
     // save Thing in db
-    Thing.create(thing)
+    await Thing.create(thing)
         .then(data => {
-            // res.send(data);
-            return data.thingId;
+            id = data.id;
         })
         .catch(err => {
             res.status(500).send({
                 message: err.message || `Error occurred while creating the Thing.`
             });
         });
+
+    return id;
 };
 
 // create and  save a new Book
-exports.createBook = (req, res) => {
-    let thingId = createThing(req, res);
+exports.createBook = async (req, res) => {
+    let thingId = await createThing(req);
 
-    if(!req.body.author || !req.body.publisher || !req.body.image) {
+    if (!req.body.author || !req.body.publisher || !req.body.image) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -67,10 +69,10 @@ exports.createBook = (req, res) => {
 }
 
 // create and  save a new Drive
-exports.createDrive = (req, res) => {
-    let thingId = createThing(req, res);
+exports.createDrive = async (req, res) => {
+    let thingId = await createThing(req);
 
-    if(!req.body.url || !req.body.description) {
+    if (!req.body.url || !req.body.description) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -97,10 +99,10 @@ exports.createDrive = (req, res) => {
 }
 
 // create and  save a new Other
-exports.createOther = (req, res) => {
-    let thingId = createThing(req, res);
+exports.createOther = async (req, res) => {
+    let thingId = await createThing(req);
 
-    if(!req.body.description || !req.body.image) {
+    if (!req.body.description || !req.body.image) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -138,24 +140,24 @@ exports.findAll = (req, res) => {
     let matchBranch = branch ? { branch: { [Op.like]: `%${branch}%` } } : null;
 
     let model;
-    if(type == 'book')
+    if (type == 'book')
         model = Book;
-    else if(type == 'other')
+    else if (type == 'other')
         model = Other;
-    else if(type == 'drive')
+    else if (type == 'drive')
         model = Drive;
     else
         model = Thing; // fix this :/
 
     model.findAll({
-            where: {
-                [Op.and]: [matchTitle, matchSem, matchBranch]
-            },
-            // include: [{
-            //     model: model,
-            //     // where: { thingId: Sequelize.col('id') }
-            // }]
-        })
+        where: {
+            [Op.and]: [matchTitle, matchSem, matchBranch]
+        },
+        // include: [{
+        //     model: model,
+        //     // where: { thingId: Sequelize.col('id') }
+        // }]
+    })
         .then(data => {
             res.send(data);
         })
@@ -187,7 +189,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    Thing.update(req.body, {where: {id: id}})
+    Thing.update(req.body, { where: { id: id } })
         .then(num => {
             if (num == 1) {
                 res.send({
@@ -211,7 +213,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    Thing.destroy({where: { id: id }})
+    Thing.destroy({ where: { id: id } })
         .then(num => {
             if (num == 1) {
                 res.send({

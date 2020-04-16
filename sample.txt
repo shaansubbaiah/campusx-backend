@@ -4,6 +4,9 @@ create user root with password '12345678';
 grant all privileges on testdb.* to root;
 flush privileges;
 
+
+
+
 # create user
 http :8080/api/users name="jake" phone=1234567890 email="a@b.com"
 
@@ -17,3 +20,9 @@ http :8080/api/things/upload-drive title='soem link' branch='ise' sem='V' userId
 # get books and links
 http :8080/api/things?type=book
 http :8080/api/things?type=drive
+
+
+
+
+# start the server
+npm start
