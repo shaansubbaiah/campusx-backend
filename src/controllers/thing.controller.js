@@ -153,6 +153,7 @@ exports.findAll = (req, res) => {
         where: {
             [Op.and]: [matchTitle, matchSem, matchBranch]
         },
+        include: Thing
         // include: [{
         //     model: model,
         //     // where: { thingId: Sequelize.col('id') }
