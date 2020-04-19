@@ -171,7 +171,9 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Thing.findByPk(id)
+    Thing.findByPk(id, {
+        include: [Book, Other, Drive]
+    })
         .then(data => {
             res.send(data);
         })
