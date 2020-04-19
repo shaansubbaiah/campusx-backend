@@ -147,17 +147,13 @@ exports.findAll = (req, res) => {
     else if (type == 'drive')
         model = Drive;
     else
-        model = Thing; // fix this :/
+        model = Thing;
 
     model.findAll({
         where: {
             [Op.and]: [matchTitle, matchSem, matchBranch]
         },
-        include: Thing
-        // include: [{
-        //     model: model,
-        //     // where: { thingId: Sequelize.col('id') }
-        // }]
+        include: (model != Thing) ? Thing : [Book, Other, Drive]
     })
         .then(data => {
             res.send(data);

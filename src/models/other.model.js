@@ -11,5 +11,6 @@ module.exports = (sequelize, Sequelize) => {
                 isURL: true
             }
         }
-    });
+    },
+        { timestamps: false });
 };
