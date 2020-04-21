@@ -1,9 +1,8 @@
 <template>
-
   <div>
     <div class="md-layout md-gutter" id="container">
       <div v-for="(product,index) in products" :key="index">
-        <div v-if="product.book">-
+        <div v-if="product.book">
           <div class="md-layout-item" id="cards">
             <a :href="'/product/' + product.id">
               <md-card md-with-hover>
@@ -24,10 +23,8 @@
                         <md-chip class="md-primary" md-clickable>{{product.branch}}</md-chip>
                       </div>
                     </md-card-actions>
-
                   </md-card-expand>
                 </md-ripple>
-
               </md-card>
             </a>
           </div>
@@ -35,7 +32,7 @@
 
         <div v-if="product.drive">
           <div class="md-layout-item" id="cards">
-             <a :href="'/product/' + product.id">
+            <a :href="'/product/' + product.id">
               <md-card md-with-hover>
                 <md-ripple>
                   <md-card-header>
@@ -54,16 +51,15 @@
                       </div>
                     </md-card-actions>
                   </md-card-expand>
-
                 </md-ripple>
               </md-card>
-             </a>
+            </a>
           </div>
         </div>
 
         <div v-if="product.other">
           <div class="md-layout-item" id="cards">
-             <a :href="'/product/' + product.id">
+            <a :href="'/product/' + product.id">
               <md-card md-with-hover>
                 <md-ripple>
                   <md-card-media>
@@ -82,25 +78,23 @@
                       </div>
                     </md-card-actions>
                   </md-card-expand>
-                  
                 </md-ripple>
               </md-card>
-             </a>
+            </a>
           </div>
         </div>
-
       </div>
     </div>
-    
-        <div class="col-md-6">
-            <router-view @refreshData="refreshList"></router-view>
-        </div>
+
+    <div class="col-md-6">
+      <router-view @refreshData="refreshList"></router-view>
     </div>
+  </div>
 </template>
  
 <script>
 import http from "../http-common";
- 
+
 export default {
   name: "products-list",
   data() {
@@ -134,14 +128,12 @@ export default {
 </script>
  
 <style>
-
-#container{
+#container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-#cards{
-  margin:20px;
+#cards {
+  margin: 20px;
 }
-
 </style>
