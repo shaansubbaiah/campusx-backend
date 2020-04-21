@@ -37,6 +37,43 @@ createThing = async (req, res) => {
     return id;
 };
 
+updateModel = async (req, res) => {
+    const type = req.body.type;
+    const id = req.params.id;
+
+    let model, n;
+
+    if (type == 'book')
+        model = Book;
+    else if (type == 'other')
+        model = Other;
+    else if (type == 'drive')
+        model = Drive;
+    else
+        model = null;
+
+    await model.update(req.body, { where: { thingId: id } })
+        .then(num => {
+            n = num;
+            if (num == 1) {
+                res.send({
+                    message: `Model id:${id} updated successfully`
+                });
+            } else {
+                res.send({
+                    message: `Cannot update Model with id:${id}. Not found or req.body empty!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: `Error updating Model id:${id}`
+            });
+        });
+
+    return n;
+}
+
 // create and  save a new Book
 exports.createBook = async (req, res) => {
     let thingId = await createThing(req, res);
@@ -185,8 +222,21 @@ exports.findOne = (req, res) => {
 };
 
 // update a Thing by id in request
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
     const id = req.params.id;
+    // const type = req.params.type;
+
+    // let model;
+    // if (type == 'book')
+    //     model = Book;
+    // else if (type == 'other')
+    //     model = Other;
+    // else if (type == 'drive')
+    //     model = Drive;
+    // else
+    //     model = null;
+    let n = await updateModel(req, res);
+    console.log('\n\n n:', n);
 
     Thing.update(req.body, { where: { id: id } })
         .then(num => {
