@@ -21,7 +21,8 @@ http :8080/api/things/upload-drive title='soem link' branch='ise' sem='V' userId
 http :8080/api/things?type=book
 http :8080/api/things?type=drive
 
-
+# update title and author of thing id = 1 and type = book
+http PUT :8080/api/things/1 title="NEW TITLE" type="book" author="NEW AUTHOR"
 
 
 # start the server

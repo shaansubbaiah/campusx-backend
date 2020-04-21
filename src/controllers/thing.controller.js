@@ -55,15 +55,6 @@ updateModel = async (req, res) => {
     await model.update(req.body, { where: { thingId: id } })
         .then(num => {
             n = num;
-            if (num == 1) {
-                res.send({
-                    message: `Model id:${id} updated successfully`
-                });
-            } else {
-                res.send({
-                    message: `Cannot update Model with id:${id}. Not found or req.body empty!`
-                });
-            }
         })
         .catch(err => {
             res.status(500).send({
@@ -224,23 +215,14 @@ exports.findOne = (req, res) => {
 // update a Thing by id in request
 exports.update = async (req, res) => {
     const id = req.params.id;
-    // const type = req.params.type;
 
-    // let model;
-    // if (type == 'book')
-    //     model = Book;
-    // else if (type == 'other')
-    //     model = Other;
-    // else if (type == 'drive')
-    //     model = Drive;
-    // else
-    //     model = null;
+    // updates Child specific data first
     let n = await updateModel(req, res);
-    console.log('\n\n n:', n);
 
+    // update Thing specific data
     Thing.update(req.body, { where: { id: id } })
         .then(num => {
-            if (num == 1) {
+            if (num == 1 && n == 1) {
                 res.send({
                     message: `Thing id:${id} updated successfully`
                 });
@@ -255,7 +237,6 @@ exports.update = async (req, res) => {
                 message: `Error updating Thing id:${id}`
             });
         });
-
 };
 
 // delete a Thing by id in request
