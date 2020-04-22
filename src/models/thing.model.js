@@ -3,13 +3,16 @@ module.exports = (sequelize, Sequelize) => {
         // Sequelize also defines by default the fields id (primary key),
         // createdAt and updatedAt to every model.
         title: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false,
         },
         branch: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false
         },
         sem: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false
         }
     });
 };

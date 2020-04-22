@@ -3,10 +3,12 @@ module.exports = (sequelize, Sequelize) => {
         // Sequelize also defines by default the fields id (primary key),
         // createdAt and updatedAt to every model.
         author: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false,
         },
         publisher: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false,
         },
         image: {
             type: Sequelize.TEXT,

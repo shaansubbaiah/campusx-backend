@@ -3,10 +3,12 @@ module.exports = (sequelize, Sequelize) => {
         // Sequelize also defines by default the fields id (primary key),
         // createdAt and updatedAt to every model.
         name: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false,
         },
         email: {
             type: Sequelize.STRING,
+            allowNull: false,
             validate: {
                 isEmail: true,
             }
@@ -15,7 +17,11 @@ module.exports = (sequelize, Sequelize) => {
         //     type: Sequelize.STRING
         // },
         phone: {
-            type: Sequelize.BIGINT(10)
+            type: Sequelize.BIGINT(10),
+            allowNull: false,
+            validate: {
+                is: /^(\+91( )?)?[0-9]{10}$/g,
+            }
         }
     });
 };
