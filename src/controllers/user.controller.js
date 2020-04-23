@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 
 // create and save a new User
 exports.create = (req, res) => {
-    if(!req.body.name || !req.body.email || !req.body.phone) {
+    if (!req.body.gtoken || !req.body.name || !req.body.email || !req.body.phone) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -15,6 +15,7 @@ exports.create = (req, res) => {
     // create User
     const user = {
         name: req.body.name,
+        gtoken: req.body.gtoken,
         email: req.body.email,
         phone: req.body.phone
     };
@@ -63,8 +64,9 @@ exports.findOne = (req, res) => {
 exports.findUserThings = (req, res) => {
     const id = req.params.id;
 
-    Thing.findAll({where: { userId: id }
-        })
+    Thing.findAll({
+        where: { userId: id }
+    })
         .then(data => {
             res.send(data);
         })
@@ -79,7 +81,7 @@ exports.findUserThings = (req, res) => {
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    User.update(req.body, {where: {id: id}})
+    User.update(req.body, { where: { id: id } })
         .then(num => {
             if (num == 1) {
                 res.send({
@@ -103,7 +105,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    User.destroy({where: { id: id }})
+    User.destroy({ where: { id: id } })
         .then(num => {
             if (num == 1) {
                 res.send({

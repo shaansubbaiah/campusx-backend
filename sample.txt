@@ -8,7 +8,7 @@ flush privileges;
 
 
 # create user
-http :8080/api/users name="jake" phone=1234567890 email="a@b.com"
+http :8080/api/users name="jake" phone=1234567890 email="a@b.com" gtoken="1433981953"
 
 # insert books
 http :8080/api/things/upload-book title='Some title' branch='cse' sem='III' userId=1 author='some author' publisher='some pubbie' image='www.a.in'

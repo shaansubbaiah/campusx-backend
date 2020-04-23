@@ -13,9 +13,10 @@ module.exports = (sequelize, Sequelize) => {
                 isEmail: true,
             }
         },
-        // password: {
-        //     type: Sequelize.STRING
-        // },
+        gtoken: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
         phone: {
             type: Sequelize.BIGINT(10),
             allowNull: false,
