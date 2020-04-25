@@ -13,6 +13,9 @@ module.exports = (sequelize, Sequelize) => {
         sem: {
             type: Sequelize.STRING,
             allowNull: false
+        },
+        donation: {
+            type: Sequelize.BOOLEAN,
         }
     });
 };

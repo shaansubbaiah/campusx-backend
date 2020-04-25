@@ -71,6 +71,7 @@ MongoDB data to javascript
 ```json
 {
     "createdAt": "2020-04-23T10:14:51.625Z",
+    "donation": true,
     "email": "a@b.com",
     "gtoken": "1433981953",
     "id": 1,
@@ -86,6 +87,7 @@ MongoDB data to javascript
         "book": null,
         "branch": "ise",
         "createdAt": "2020-04-23T10:23:28.000Z",
+        "donation": true,
         "drive": {
             "description": "nice link and stuff",
             "id": 1,
@@ -109,6 +111,7 @@ MongoDB data to javascript
         },
         "branch": "cse",
         "createdAt": "2020-04-23T10:22:57.000Z",
+        "donation": true,
         "drive": null,
         "id": 1,
         "other": null,
@@ -119,7 +122,7 @@ MongoDB data to javascript
     }
 ]
 ```
-Returns most recent things by default, provide `title`, `sem` or `branch` query parameter to filter results
+Returns most recent things by default, provide `title`, `sem`, `branch` or `donation` query parameter to filter results
 
 Filter by title:
 `?title=CProgramming`
@@ -130,6 +133,8 @@ Filter by sem:
 Filter by branch:
 `?branch=CSE`
 
+Filter donations:
+`?donation=true`
+
 Combine multiple filters:
 `?sem=4&branch=CSE`
-

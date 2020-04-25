@@ -19,7 +19,8 @@ createThing = async (req, res) => {
         title: req.body.title,
         branch: req.body.branch,
         sem: req.body.sem,
-        userId: req.body.userId
+        userId: req.body.userId,
+        donation: req.body.donation,
     };
 
     let id;
@@ -114,6 +115,9 @@ exports.createDrive = async (req, res) => {
         thingId: thingId
     };
 
+    // all Drives are donations, additional check
+    Thing.update({ donation: true }, { where: { id: thingId } })
+
     // save Drive in db
     Drive.create(drive)
         .then(data => {
@@ -161,11 +165,13 @@ exports.findAll = (req, res) => {
     const title = req.query.title;
     const sem = req.query.sem;
     const branch = req.query.branch;
+    const donation = req.query.donation;
     const type = req.query.type;
 
     let matchTitle = title ? { title: { [Op.like]: `%${title}%` } } : null;
     let matchSem = sem ? { sem: { [Op.like]: `%${sem}%` } } : null;
     let matchBranch = branch ? { branch: { [Op.like]: `%${branch}%` } } : null;
+    let matchDonation = donation ? { donation: { [Op.eq]: true } } : null;
 
     let model;
     if (type == 'book')
@@ -179,7 +185,7 @@ exports.findAll = (req, res) => {
 
     model.findAll({
         where: {
-            [Op.and]: [matchTitle, matchSem, matchBranch]
+            [Op.and]: [matchTitle, matchSem, matchBranch, matchDonation]
         },
         include: (model != Thing) ? Thing : [Book, Other, Drive]
     })
