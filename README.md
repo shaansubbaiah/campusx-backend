@@ -134,7 +134,7 @@ Filter by branch:
 `?branch=CSE`
 
 Filter donations:
-`?donation=true`
+`?donation=1`
 
 Combine multiple filters:
 `?sem=4&branch=CSE`

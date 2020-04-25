@@ -171,7 +171,8 @@ exports.findAll = (req, res) => {
     let matchTitle = title ? { title: { [Op.like]: `%${title}%` } } : null;
     let matchSem = sem ? { sem: { [Op.like]: `%${sem}%` } } : null;
     let matchBranch = branch ? { branch: { [Op.like]: `%${branch}%` } } : null;
-    let matchDonation = donation ? { donation: { [Op.eq]: true } } : null;
+    let matchDonation = donation ? { donation: { [Op.eq]: donation } } : null;
+    console.log(`donation: ${donation}`);
 
     let model;
     if (type == 'book')

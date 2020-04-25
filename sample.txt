@@ -11,8 +11,8 @@ flush privileges;
 http :8080/api/users name="jake" phone=1234567890 email="a@b.com" gtoken="1433981953"
 
 # insert books
-http :8080/api/things/upload-book title='Some title' branch='cse' sem='III' userId=1 author='some author' publisher='some pubbie' image='www.a.in' donation='true'
-http :8080/api/things/upload-book title='Anotha one' branch='ise' sem='IV' userId=1 author='big author' publisher='some pubbie again' image='www.a.in' donation='true'
+http :8080/api/things/upload-book title='Some title' branch='cse' sem='III' userId=1 author='some author' publisher='some pubbie' image='www.a.in' donation=1
+http :8080/api/things/upload-book title='Anotha one' branch='ise' sem='IV' userId=1 author='big author' publisher='some pubbie again' image='www.a.in' donation=1
 
 # insert link
 http :8080/api/things/upload-drive title='soem link' branch='ise' sem='V' userId=1 description='nice link and stuff' url='www.drive.com'
