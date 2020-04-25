@@ -1,5 +1,38 @@
 <template>
   <div>
+
+    <div class="search">
+      <md-toolbar class="md-transparent" id="search-bar">
+        <md-field>
+          <label for="title">Search..</label>
+          <md-input name="title" id="title" v-model="stitle"></md-input>
+          <md-button v-on:click="retrieveProducts" class="md-icon-button" id="search-icon">
+          <md-icon>search</md-icon>
+        </md-button>
+        </md-field>
+      </md-toolbar>
+          
+      <md-field id="filter">
+        <label for="sem">SEM</label>
+        <md-select v-model="ssem" name="sem" id="sem">
+          <md-option value="1">1</md-option>
+          <md-option value="2">2</md-option>
+          <md-option value="3">3</md-option>
+          <md-option value="4">4</md-option>
+        </md-select>
+      </md-field>
+      
+      <md-field>
+        <label for="branch">BRANCH</label>
+        <md-select v-model="sbranch" name="branch" id="branch">
+          <md-option value="CSE">CSE</md-option>
+          <md-option value="ISE">ISE</md-option>
+          <md-option value="MECH">MECH</md-option>
+          <md-option value="EEE">EEE</md-option>
+        </md-select>
+      </md-field>
+    </div>
+
     <div class="md-layout md-gutter" id="container">
       <div v-for="(product,index) in products" :key="index">
         <div v-if="product.book">
@@ -13,7 +46,6 @@
                   <md-card-header>
                     <div class="md-title">{{product.title}}</div>
                     <div class="md-subhead">by {{product.book.author}}</div>
-                    <div class="md-subhead">{{product.book.publisher}}</div>
                   </md-card-header>
 
                   <md-card-expand>
@@ -21,6 +53,9 @@
                       <div>
                         <md-chip class="md-primary" md-clickable>{{product.sem}}</md-chip>
                         <md-chip class="md-primary" md-clickable>{{product.branch}}</md-chip>
+                        <div v-if="product.donation">
+                          <md-chip class="md-primary" md-clickable>DONATION</md-chip>
+                        </div>
                       </div>
                     </md-card-actions>
                   </md-card-expand>
@@ -38,9 +73,6 @@
                   <md-card-header>
                     <div class="md-title">{{product.title}}</div>
                     <div class="md-subhead">{{product.drive.description}}</div>
-                    <div class="link">
-                      <a v-bind:href="product.drive.url">{{product.drive.url}}</a>
-                    </div>
                   </md-card-header>
 
                   <md-card-expand>
@@ -75,6 +107,9 @@
                       <div>
                         <md-chip class="md-primary" md-clickable>{{product.sem}}</md-chip>
                         <md-chip class="md-primary" md-clickable>{{product.branch}}</md-chip>
+                        <div v-if="product.donation">
+                          <md-chip class="md-primary" md-clickable>DONATION</md-chip>
+                        </div>
                       </div>
                     </md-card-actions>
                   </md-card-expand>
@@ -86,9 +121,9 @@
       </div>
     </div>
 
-    <div class="col-md-6">
+    <!-- <div class="col-md-6">
       <router-view @refreshData="refreshList"></router-view>
-    </div>
+    </div> -->
   </div>
 </template>
  
@@ -99,16 +134,20 @@ export default {
   name: "products-list",
   data() {
     return {
-      currentProduct: null,
-      currentIndex: -1,
-      products: {}
+      stitle: "", 
+      ssem: "",
+      sbranch: "",
+      products: []
     };
   },
   methods: {
     /* eslint-disable no-console */
     retrieveProducts() {
+      var sem = this.ssem;
+      var branch = this.sbranch;
+
       http
-        .get("/things")
+        .get('/things?title='+this.stitle+'&sem='+sem+'&branch='+branch)
         .then(response => {
           this.products = response.data; // JSON are parsed automatically.
           console.log(response.data);
@@ -119,6 +158,9 @@ export default {
     },
     refreshList() {
       this.retrieveProducts();
+    },
+    here(){
+      alert();
     }
   },
   mounted() {
@@ -128,6 +170,11 @@ export default {
 </script>
  
 <style>
+
+.search{
+  display:inline-block;
+}
+
 #container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -136,4 +183,5 @@ export default {
 #cards {
   margin: 20px;
 }
+
 </style>

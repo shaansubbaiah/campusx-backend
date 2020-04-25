@@ -4,11 +4,11 @@
             <md-dialog-content class="md-scrollbar">
               
               <md-dialog-title>
-        <md-button class="md-icon-button" id="cancel-btn">
-          <router-link to="/">
-            <md-icon>cancel</md-icon>
-          </router-link>
-        </md-button>
+                <md-button class="md-icon-button" id="cancel-btn">
+                  <router-link to="/">
+                    <md-icon>cancel</md-icon>
+                  </router-link>
+                </md-button>
               </md-dialog-title>
 
               <div v-if="product.book">
@@ -22,9 +22,6 @@
                     {{product.sem}}<br>
                     {{product.branch}}<br>
                     POSTED AT: {{product.createdAt}}<br>
-                    <md-button v-on:click="deleteProduct(product.id)" class="md-dense md-accent">
-                      <router-link to="/">DELETE</router-link>
-                    </md-button>
                   </div>
                 </div>
               </div>
@@ -37,9 +34,6 @@
                   {{product.sem}}<br>
                   {{product.branch}}<br>
                   POSTED AT: {{product.createdAt}}<br>
-                  <md-button v-on:click="deleteProduct(product.id)" class="md-dense md-accent">
-                    <router-link to="/">DELETE</router-link>
-                  </md-button>
                 </div>
               </div>
 
@@ -53,9 +47,6 @@
                     {{product.sem}}<br>
                     {{product.branch}}<br>
                     POSTED AT: {{product.createdAt}}<br>
-                    <md-button v-on:click="deleteProduct(product.id)" class="md-dense md-accent">
-                      <router-link to="/">DELETE</router-link>
-                    </md-button>
                   </div>
                 </div>
               </div>
@@ -96,17 +87,6 @@ export default {
         .catch(e => {
           console.log(e);
         });
-    },
-    deleteProduct(id) {
-      http
-        .delete("/things/"+id)
-        .then(response => {
-          this.retrieveProducts();
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        })
     }
   },
   mounted() {

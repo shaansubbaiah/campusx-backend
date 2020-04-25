@@ -54,13 +54,13 @@
                 <md-field class="form-data">
                   <label>IMAGE</label>
                   <md-file v-model="product.image" name="image" id="image" accept="image/*" />
-                </md-field> 
+                </md-field>
                  
                 <span>
                   <router-link to="/">
                     <md-button v-on:click="saveBook" class="md-dense md-raised md-primary">SUBMIT</md-button>
                   </router-link>
-                  <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CANCEL</md-button>
+                  <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
                 </span>
 
               </form>
@@ -110,7 +110,7 @@
                   <router-link to="/">
                     <md-button v-on:click="saveDrive" class="md-dense md-raised md-primary">SUBMIT</md-button>
                   </router-link>
-                  <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CANCEL</md-button>
+                  <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
                 </span>
 
               </form>
