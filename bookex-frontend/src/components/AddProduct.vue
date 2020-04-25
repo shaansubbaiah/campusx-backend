@@ -52,6 +52,14 @@
                 </md-field>
 
                 <md-field class="form-data">
+                  <label for="donation">DONATE</label>
+                  <md-select v-model="product.donation" name="donation" id="donation">
+                    <md-option value="1">YES</md-option>
+                    <md-option value="0">NO</md-option>
+                  </md-select>
+                </md-field>
+
+                <md-field class="form-data">
                   <label>IMAGE</label>
                   <md-file v-model="product.image" name="image" id="image" accept="image/*" />
                 </md-field>
@@ -152,6 +160,14 @@
                 </md-field>
 
                 <md-field class="form-data">
+                  <label for="donation">DONATE</label>
+                  <md-select v-model="product.donation" name="donation" id="donation">
+                    <md-option value="1">YES</md-option>
+                    <md-option value="0">NO</md-option>
+                  </md-select>
+                </md-field>
+
+                <md-field class="form-data">
                   <label>IMAGE</label>
                   <md-file v-model="product.image" name="image" id="image" accept="image/*" />
                 </md-field>
@@ -189,7 +205,8 @@ export default {
         publisher: "",
         image: "",
         description: "",
-        link: ""
+        link: "",
+        donation: null
       },
       submitted: false
     };
@@ -203,7 +220,8 @@ export default {
         sem: this.product.sem,
         branch: this.product.branch,
         publisher: this.product.publisher,
-        image: this.product.image
+        image: this.product.image,
+        donation: this.product.donation
       };
  
       http
@@ -247,7 +265,8 @@ export default {
         sem: this.product.sem,
         branch: this.product.branch,
         image: this.product.image,
-        description: this.product.description
+        description: this.product.description,
+        donation: this.product.donation
       };
       
       http

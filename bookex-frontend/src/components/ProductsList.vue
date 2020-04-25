@@ -11,26 +11,40 @@
         </md-button>
         </md-field>
       </md-toolbar>
-          
-      <md-field id="filter">
-        <label for="sem">SEM</label>
-        <md-select v-model="ssem" name="sem" id="sem">
-          <md-option value="1">1</md-option>
-          <md-option value="2">2</md-option>
-          <md-option value="3">3</md-option>
-          <md-option value="4">4</md-option>
-        </md-select>
-      </md-field>
-      
-      <md-field>
-        <label for="branch">BRANCH</label>
-        <md-select v-model="sbranch" name="branch" id="branch">
-          <md-option value="CSE">CSE</md-option>
-          <md-option value="ISE">ISE</md-option>
-          <md-option value="MECH">MECH</md-option>
-          <md-option value="EEE">EEE</md-option>
-        </md-select>
-      </md-field>
+
+      <md-button v-on:click="retrieveProducts" class="md-dense md-raised">FILTER</md-button>
+      <md-button v-on:click="clearSearch" class="md-dense md-raised">CLEAR</md-button>
+
+      <div id="filters">    
+        <md-field id="sem-filter">
+          <label for="sem">SEM</label>
+          <md-select v-model="ssem" name="sem" id="sem">
+            <md-option value="1">1</md-option>
+            <md-option value="2">2</md-option>
+            <md-option value="3">3</md-option>
+            <md-option value="4">4</md-option>
+          </md-select>
+        </md-field>
+        
+        <md-field id="branch-filter">
+          <label for="branch">BRANCH</label>
+          <md-select v-model="sbranch" name="branch" id="branch">
+            <md-option value="CSE">CSE</md-option>
+            <md-option value="ISE">ISE</md-option>
+            <md-option value="MECH">MECH</md-option>
+            <md-option value="EEE">EEE</md-option>
+          </md-select>
+        </md-field>
+
+        <md-field id="donation-filter">
+          <label for="donation">DONATE</label>
+          <md-select v-model="sdonation" name="donation" id="donation">
+            <md-option value="1">YES</md-option>
+            <md-option value="0">NO</md-option>
+          </md-select>
+        </md-field>
+
+      </div>
     </div>
 
     <div class="md-layout md-gutter" id="container">
@@ -54,7 +68,7 @@
                         <md-chip class="md-primary" md-clickable>{{product.sem}}</md-chip>
                         <md-chip class="md-primary" md-clickable>{{product.branch}}</md-chip>
                         <div v-if="product.donation">
-                          <md-chip class="md-primary" md-clickable>DONATION</md-chip>
+                          <md-chip class="md-primary" id="donation" md-clickable>DONATION</md-chip>
                         </div>
                       </div>
                     </md-card-actions>
@@ -87,7 +101,7 @@
               </md-card>
             </a>
           </div>
-        </div>
+        </div>-
 
         <div v-if="product.other">
           <div class="md-layout-item" id="cards">
@@ -108,7 +122,7 @@
                         <md-chip class="md-primary" md-clickable>{{product.sem}}</md-chip>
                         <md-chip class="md-primary" md-clickable>{{product.branch}}</md-chip>
                         <div v-if="product.donation">
-                          <md-chip class="md-primary" md-clickable>DONATION</md-chip>
+                          <md-chip class="md-primary" id="donation" md-clickable>DONATION</md-chip>
                         </div>
                       </div>
                     </md-card-actions>
@@ -137,17 +151,16 @@ export default {
       stitle: "", 
       ssem: "",
       sbranch: "",
+      sdonation: "",
       products: []
     };
   },
   methods: {
     /* eslint-disable no-console */
     retrieveProducts() {
-      var sem = this.ssem;
-      var branch = this.sbranch;
 
       http
-        .get('/things?title='+this.stitle+'&sem='+sem+'&branch='+branch)
+        .get('/things?title='+this.stitle+'&sem='+this.ssem+'&branch='+this.sbranch+'&donation='+this.sdonation)
         .then(response => {
           this.products = response.data; // JSON are parsed automatically.
           console.log(response.data);
@@ -159,8 +172,12 @@ export default {
     refreshList() {
       this.retrieveProducts();
     },
-    here(){
-      alert();
+    clearSearch(){
+      this.stitle= "",
+      this.ssem= "",
+      this.sbranch= "",
+      this.sdonation= ""
+      this.retrieveProducts()
     }
   },
   mounted() {
@@ -171,8 +188,15 @@ export default {
  
 <style>
 
-.search{
-  display:inline-block;
+#search-bar{
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+#filters{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 #container {
@@ -182,6 +206,10 @@ export default {
 
 #cards {
   margin: 20px;
+}
+
+#donation{
+  float: right;
 }
 
 </style>
