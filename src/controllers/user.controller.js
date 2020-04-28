@@ -1,7 +1,105 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const checkAuth = require('../middleware/authenticate');
+
 const db = require('../models');
 const User = db.users;
 const Thing = db.things;
 const Op = db.Sequelize.Op;
+
+// create user NEW
+exports.register = (req, res) => {
+    if (!req.body.email || !req.body.password) {
+        res.status(400).send({
+            message: 'Content can\'t be empty!'
+        });
+        return;
+    }
+
+
+
+    bcrypt.hash(req.body.password, 10, (err, hash) => {
+        if (err) {
+            return res.status(500).send({
+                message: err.message || `Error occurred hashing password.`
+            })
+        }
+        else {
+            const user = {
+                email: req.body.email,
+                password: hash
+            }
+
+            User.create(user)
+                .then(data => {
+                    res.send(data);
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        message: err.message || `Error occurred while creating the User.`
+                    });
+                });
+        }
+    })
+};
+
+
+// user login
+
+exports.login = (req, res) => {
+    if (!req.body.email || !req.body.password) {
+        res.status(400).send({
+            message: 'Content can\'t be empty!'
+        });
+        return;
+    }
+
+    User.findOne({
+        where: { email: req.body.email }
+    })
+        .then(data => {
+            if (data == null) {
+                res.status(401).send({
+                    message: `Not Authorized`
+                })
+            }
+            bcrypt.compare(req.body.password, data.dataValues.password, (err, result) => {
+                if (err) {
+                    res.status(401).send({
+                        message: `Not Authorized`
+                    })
+                }
+                if (result) {
+                    const token = jwt.sign(
+                        {
+                            email: data.dataValues.email,
+                            id: data.dataValues.id
+                        },
+                        "secretPass",
+                        {
+                            expiresIn: "24h"
+                        }
+                    );
+
+                    return res.status(200).send({
+                        message: `Authorization successful.`,
+                        token: token
+                    })
+                }
+                res.status(401).send({
+                    message: `Not Authorized`
+                })
+            })
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || `Error`
+            })
+        })
+
+};
+
 
 // create and save a new User
 exports.create = (req, res) => {
@@ -23,11 +121,13 @@ exports.create = (req, res) => {
     // save User in db
     User.create(user)
         .then(data => {
-            res.send(data);
+            res.status(201).send({
+                message: `User registered successfully.`
+            });
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || `Error occurred while creating the User.`
+                message: err.message || `Error registering the User.`
             });
         });
 };

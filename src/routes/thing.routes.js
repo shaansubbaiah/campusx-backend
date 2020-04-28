@@ -1,3 +1,5 @@
+const checkAuth = require('../middleware/authenticate');
+
 module.exports = app => {
     const things = require('../controllers/thing.controller');
 
@@ -5,7 +7,7 @@ module.exports = app => {
 
     // create a new Thing
     // router.post('/', things.create);
-    router.post('/upload-book', things.createBook);
+    router.post('/upload-book', checkAuth, things.createBook);
     router.post('/upload-drive', things.createDrive);
     router.post('/upload-other', things.createOther);
 
