@@ -14,7 +14,7 @@
           <md-tab md-label="BOOK">
             <div v-if="!submitted">
 
-              <form novalidate class="md-layout">
+              <form>
                 
                 <md-field class="form-data">
                   <label for="title">TITLE</label>
@@ -65,9 +65,7 @@
                 </md-field>
                  
                 <span>
-                  <router-link to="/">
-                    <md-button v-on:click="saveBook" class="md-dense md-raised md-primary">SUBMIT</md-button>
-                  </router-link>
+                  <md-button v-show="product.title && product.author && product.publisher && product.sem && product.branch && product.donation && product.image" v-on:click="saveBook" class="md-dense md-raised md-primary">SUBMIT</md-button>
                   <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
                 </span>
 
@@ -77,7 +75,7 @@
 
           <md-tab md-label="LINK">
             <div v-if="!submitted">
-              <form novalidate class="md-layout">
+              <form class="md-layout">
 
                 <md-field class="form-data">
                   <label for="title">TITLE</label>
@@ -115,9 +113,7 @@
                 </md-field>
                 
                 <span>
-                  <router-link to="/">
-                    <md-button v-on:click="saveDrive" class="md-dense md-raised md-primary">SUBMIT</md-button>
-                  </router-link>
+                  <md-button v-show="product.title && product.url && product.description && product.sem && product.branch" v-on:click="saveDrive" class="md-dense md-raised md-primary">SUBMIT</md-button>
                   <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
                 </span>
 
@@ -127,7 +123,7 @@
 
           <md-tab md-label="OTHERS">
             <div v-if="!submitted">
-              <form novalidate class="md-layout">
+              <form class="md-layout">
 
                 <md-field class="form-data">
                   <label for="title">TITLE</label>
@@ -173,9 +169,7 @@
                 </md-field>
                 
                 <span>
-                  <router-link to="/">
-                    <md-button v-on:click="saveOther" class="md-dense md-raised md-primary">SUBMIT</md-button>
-                  </router-link>
+                  <md-button v-show="product.title && product.description && product.sem && product.branch && product.donation && product.image" v-on:click="saveOther" class="md-dense md-raised md-primary">SUBMIT</md-button>
                   <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
                 </span>
 
@@ -196,6 +190,7 @@ export default {
   name: "add-product",
   data() {
     return {
+      image: "",
       product: {
         id: 0,
         title: "",
@@ -212,8 +207,7 @@ export default {
     };
   },
   methods: {
-    /* eslint-disable no-console */
-    saveBook() {
+    async saveBook() {
       var data = {
         title: this.product.title,
         author: this.product.author,
@@ -223,8 +217,8 @@ export default {
         image: this.product.image,
         donation: this.product.donation
       };
- 
-      http
+      try{
+        await http
         .post("/things/upload-book", data)
         .then(response => {
           this.book.id = response.data.id;
@@ -233,11 +227,16 @@ export default {
         .catch(e => {
           console.log(e);
         });
+      }
+      catch(err){
+        console.log(err);
+      }
  
       this.submitted = true;
+      this.$router.push('/');
     },
 
-    saveDrive(){
+    async saveDrive(){
       var data = {
         title: this.product.title,
         sem: this.product.sem,
@@ -246,7 +245,8 @@ export default {
         description: this.product.description
       };
       
-      http
+      try{
+        await http
         .post("/things/upload-drive", data)
         .then(response => {
           this.drive.id = response.data.id;
@@ -255,11 +255,16 @@ export default {
         .catch(e => {
           console.log(e);
         });
+      }
+      catch(err){
+        console.log(err);
+      }
  
       this.submitted = true;
+      this.$router.push('/');
     },
 
-    saveOther(){
+    async saveOther(){
       var data = {
         title: this.product.title,
         sem: this.product.sem,
@@ -269,7 +274,8 @@ export default {
         donation: this.product.donation
       };
       
-      http
+      try{
+        await http
         .post("/things/upload-other", data)
         .then(response => {
           this.drive.id = response.data.id;
@@ -278,15 +284,19 @@ export default {
         .catch(e => {
           console.log(e);
         });
+      }
+      catch(err){
+        console.log(err);
+      }
  
       this.submitted = true;
+      this.$router.push('/');
     },
 
     newProduct() {
       this.submitted = false;
       this.product = {};
     }
-    /* eslint-enable no-console */
   }
 };
 </script>

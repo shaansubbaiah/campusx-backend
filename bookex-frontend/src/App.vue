@@ -164,12 +164,13 @@ export default {
   },
   methods: {
     /* eslint-disable no-console */
-    retrieveProducts() {
+    async retrieveProducts() {
       var data = {
         title: this.title
       };
 
-      http
+      try{
+        await http
         .get("/things",data)
         .then(response => {
           this.products = response.data; // JSON are parsed automatically.
@@ -178,6 +179,10 @@ export default {
         .catch(e => { 
           console.log(e);
         });
+      }
+      catch(err){
+        console.log(err);
+      }
     },
     deleteProduct(id) {
       http

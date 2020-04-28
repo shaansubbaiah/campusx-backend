@@ -54,9 +54,7 @@
                         <md-file v-model="product.book.image" name="image" id="image" accept="image/*" />
                         </md-field>
                         
-                        <router-link to="/">
-                            <md-button v-on:click="updateBook(product.id)" class="md-dense md-raised md-primary">UPDATE</md-button>
-                        </router-link>
+                        <md-button v-on:click="updateBook(product.id)" class="md-dense md-raised md-primary">UPDATE</md-button>
 
                     </form>
                 </div>
@@ -99,9 +97,7 @@
                         </md-select>
                         </md-field>
                         
-                        <router-link to="/">
-                            <md-button v-on:click="updateDrive(product.id)" class="md-dense md-raised md-primary">UPDATE</md-button>
-                        </router-link>
+                        <md-button v-on:click="updateDrive(product.id)" class="md-dense md-raised md-primary">UPDATE</md-button>
 
                     </form>
                 </div>
@@ -144,9 +140,7 @@
                             <md-file v-model="product.other.image" name="image" id="image" accept="image/*" />
                         </md-field>
                         
-                        <router-link to="/">
-                            <md-button v-on:click="updateOther(product.id)" class="md-dense md-raised md-primary">UPDATE</md-button>
-                        </router-link>
+                        <md-button v-on:click="updateOther(product.id)" class="md-dense md-raised md-primary">UPDATE</md-button>
 
                     </form>
                 </div>
@@ -167,9 +161,10 @@ export default {
         };
   },
   methods: {
-        retrieveProduct() {
+        async retrieveProduct() {
             let pid = this.$route.params.id;
-            http
+            try{
+                await http
                 .get("/things/"+pid)
                 .then(response => {
                     this.product = response.data; // JSON are parsed automatically.
@@ -178,8 +173,12 @@ export default {
                 .catch(e => {
                     console.log(e);
                 });
+            }
+            catch(err){
+                console.log(err);
+            }
         },
-        updateBook(id){
+        async updateBook(id){
             var data = {
                 title: this.product.title,
                 author: this.product.book.author,
@@ -189,7 +188,8 @@ export default {
                 image: this.product.book.image,
                 type: 'book'
             }
-            http
+            try{
+                await http
                 .put("/things/"+id,data)
                 .then(response => {
                     console.log(response.data);
@@ -197,8 +197,13 @@ export default {
                 .catch(e => {
                     console.log(e);
                 })
+            }
+            catch(err){
+                console.log(err);
+            }
+            this.$router.push('/');
         },
-        updateDrive(id){
+        async updateDrive(id){
             var data = {
                 title: this.product.title,
                 url: this.product.drive.url,
@@ -207,7 +212,8 @@ export default {
                 description: this.product.drive.description,
                 type: 'drive'
             }
-            http
+            try{
+                await http
                 .put("/things/"+id,data)
                 .then(response => {
                     this.retrieveProduct();
@@ -216,8 +222,13 @@ export default {
                 .catch(e => {
                     console.log(e);
                 })
+            }
+            catch(err){
+                console.log(err);
+            }
+            this.$router.push('/');
         },
-        updateOther(id){
+        async updateOther(id){
             var data = {
                 title: this.product.title,
                 sem: this.product.sem,
@@ -226,7 +237,8 @@ export default {
                 image: this.product.other.image,
                 type: 'other'
             }
-            http
+            try{
+                await http
                 .put("/things/"+id,data)
                 .then(response => {
                     this.retrieveProduct();
@@ -235,6 +247,11 @@ export default {
                 .catch(e => {
                     console.log(e);
                 })
+            }
+            catch(err){
+                console.log(err);
+            }
+            this.$router.push('/');
         }
 
   },
