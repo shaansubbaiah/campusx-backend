@@ -23,7 +23,6 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "google-auth-library": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.1.0",
     "sequelize": "^5.21.5"
