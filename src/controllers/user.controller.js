@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const checkAuth = require('../middleware/authenticate');
+const apiConfig = require('../config/api.config');
 
 const db = require('../models');
 const User = db.users;
@@ -78,7 +79,7 @@ exports.login = (req, res) => {
                             email: data.dataValues.email,
                             id: data.dataValues.id
                         },
-                        "secretPass",
+                        apiConfig.JWT_SECRET,
                         {
                             expiresIn: "24h"
                         }

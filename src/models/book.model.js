@@ -11,10 +11,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
         },
         image: {
-            type: Sequelize.TEXT,
-            validate: {
-                isURL: true
-            }
+            type: Sequelize.STRING,
         }
     },
         { timestamps: false });
