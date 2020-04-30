@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize) => {
         // createdAt and updatedAt to every model.
         name: {
             type: Sequelize.STRING,
-            allowNull: false,
+            // allowNull: false,
         },
         email: {
             type: Sequelize.STRING,
@@ -15,14 +15,18 @@ module.exports = (sequelize, Sequelize) => {
         },
         gtoken: {
             type: Sequelize.STRING,
-            allowNull: false,
+            // allowNull: false,
         },
         phone: {
             type: Sequelize.BIGINT(10),
-            allowNull: false,
+            // allowNull: false,
             validate: {
                 is: /^(\+91( )?)?[0-9]{10}$/g,
             }
-        }
+        },
+        password: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
     });
 };
