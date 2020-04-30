@@ -223,6 +223,22 @@ exports.findOne = (req, res) => {
 exports.update = async (req, res) => {
     const id = req.params.id;
 
+    // check if only owner of the thing is attempting to update it
+    const reqUserId = req.userData.id;
+    Thing.findByPk(id)
+        .then(data => {
+            if (data.dataValues.userId != reqUserId) {
+                res.status(401).send({
+                    message: `Not Authorized`
+                })
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || `Error retrieving Thing with id:${id}`
+            })
+        })
+
     // updates Child specific data first
     let n = await updateModel(req, res);
 
@@ -249,6 +265,22 @@ exports.update = async (req, res) => {
 // delete a Thing by id in request
 exports.delete = (req, res) => {
     const id = req.params.id;
+
+    // check if only owner of the thing is attempting to update it
+    const reqUserId = req.userData.id;
+    Thing.findByPk(id)
+        .then(data => {
+            if (data.dataValues.userId != reqUserId) {
+                res.status(401).send({
+                    message: `Not Authorized`
+                })
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || `Error retrieving Thing with id:${id}`
+            })
+        })
 
     Thing.destroy({ where: { id: id } })
         .then(num => {

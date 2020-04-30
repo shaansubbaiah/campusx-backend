@@ -8,26 +8,30 @@ module.exports = app => {
     // register a User
     router.post('/register', users.register);
 
-    // login existing User
+    // login existing User - RETURNS JWT TOKEN
     router.post('/login', users.login);
 
-    // create a new User
-    router.post('/', users.create);
-
-    // retrieve all Users
-    router.get('/', users.findAll);
-
-    // retrieve a single User by id
-    router.get("/:id", checkAuth, users.findOne);
-
     // retrieve a single User's things by id
-    router.get("/:id/things", checkAuth, users.findUserThings);
+    router.get("/:id/things", users.findUserThings);
 
     // update User with id
     router.put("/:id", users.update);
 
     // delete User with id
     router.delete("/:id", users.delete);
+
+    //
+    //  Routes below have no use as of now
+    //
+
+    // // create a new User
+    // router.post('/', users.create);
+
+    // retrieve all Users
+    router.get('/', users.findAll);
+
+    // retrieve a single User by id
+    router.get("/:id", users.findOne);
 
     // delete all Users
     router.delete("/", users.deleteAll);

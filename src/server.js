@@ -44,6 +44,19 @@ app.get('/', (req, res) => {
 require('./routes/thing.routes')(app);
 require('./routes/user.routes')(app);
 
+// 404 on unhandled route
+app.use((req, res, next) => {
+    const error = new Error('Not Found!');
+    error.status = 404;
+    next(error);
+})
+
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    res.send({
+        message: error.message
+    });
+})
 
 // set port listen to requests
 const PORT = process.env.PORT || 8080;

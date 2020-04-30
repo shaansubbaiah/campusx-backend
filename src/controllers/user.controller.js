@@ -8,7 +8,7 @@ const User = db.users;
 const Thing = db.things;
 const Op = db.Sequelize.Op;
 
-// create user NEW
+// user register
 exports.register = (req, res) => {
     if (!req.body.email || !req.body.password) {
         res.status(400).send({
@@ -17,8 +17,7 @@ exports.register = (req, res) => {
         return;
     }
 
-
-
+    // encrypt password with bcrypt
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         if (err) {
             return res.status(500).send({
@@ -46,7 +45,6 @@ exports.register = (req, res) => {
 
 
 // user login
-
 exports.login = (req, res) => {
     if (!req.body.email || !req.body.password) {
         res.status(400).send({
@@ -59,17 +57,21 @@ exports.login = (req, res) => {
         where: { email: req.body.email }
     })
         .then(data => {
+            // if user with email doesnt exist 
             if (data == null) {
                 res.status(401).send({
                     message: `Not Authorized`
                 })
             }
+
+            // else check password
             bcrypt.compare(req.body.password, data.dataValues.password, (err, result) => {
                 if (err) {
                     res.status(401).send({
                         message: `Not Authorized`
                     })
                 }
+                // password matches, create JWT token
                 if (result) {
                     const token = jwt.sign(
                         {
@@ -101,36 +103,36 @@ exports.login = (req, res) => {
 };
 
 
-// create and save a new User
-exports.create = (req, res) => {
-    if (!req.body.gtoken || !req.body.name || !req.body.email || !req.body.phone) {
-        res.status(400).send({
-            message: 'Content can\'t be empty!'
-        });
-        return;
-    }
+// // create and save a new User
+// exports.create = (req, res) => {
+//     if (!req.body.gtoken || !req.body.name || !req.body.email || !req.body.phone) {
+//         res.status(400).send({
+//             message: 'Content can\'t be empty!'
+//         });
+//         return;
+//     }
 
-    // create User
-    const user = {
-        name: req.body.name,
-        gtoken: req.body.gtoken,
-        email: req.body.email,
-        phone: req.body.phone
-    };
+//     // create User
+//     const user = {
+//         name: req.body.name,
+//         gtoken: req.body.gtoken,
+//         email: req.body.email,
+//         phone: req.body.phone
+//     };
 
-    // save User in db
-    User.create(user)
-        .then(data => {
-            res.status(201).send({
-                message: `User registered successfully.`
-            });
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || `Error registering the User.`
-            });
-        });
-};
+//     // save User in db
+//     User.create(user)
+//         .then(data => {
+//             res.status(201).send({
+//                 message: `User registered successfully.`
+//             });
+//         })
+//         .catch(err => {
+//             res.status(500).send({
+//                 message: err.message || `Error registering the User.`
+//             });
+//         });
+// };
 
 // retrieve all Users from db
 exports.findAll = (req, res) => {
@@ -164,6 +166,8 @@ exports.findOne = (req, res) => {
 exports.findUserThings = (req, res) => {
     const id = req.params.id;
 
+    console.log(req.userData);
+
     Thing.findAll({
         where: { userId: id }
     })
@@ -180,6 +184,8 @@ exports.findUserThings = (req, res) => {
 // update a User by id in request
 exports.update = (req, res) => {
     const id = req.params.id;
+
+    // 
 
     User.update(req.body, { where: { id: id } })
         .then(num => {
