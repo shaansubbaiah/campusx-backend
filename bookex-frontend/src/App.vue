@@ -1,5 +1,6 @@
 <template>
     <div id="app" class="container-fluid">
+      <h3>Hey {{this.$store.state.username}}!!</h3>
       <div class="search">
         <md-button class="md-dense md-raised">
           <router-link to="/login">LOGIN</router-link>

@@ -66,7 +66,9 @@ export default{
                         .then(response => {
                             this.message = response.data.message
                             if(this.message == 'Authorization successful'){
-                                this.token = response.data.token
+                                this.$store.state.username = response.data.name
+                                this.$store.state.userId = response.data.id
+                                this.$store.state.token = response.data.token
                                 console.log(this.token)
                             }
                         })

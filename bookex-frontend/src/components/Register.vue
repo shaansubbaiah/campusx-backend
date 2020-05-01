@@ -73,6 +73,8 @@ export default{
                                 this.message = response.data.message
                             }
                             else{
+                                this.$store.state.username = response.data.name
+                                this.$store.state.userId = response.data.id
                                 this.message = 'Successful'
                             }
                             console.log(response.data);
