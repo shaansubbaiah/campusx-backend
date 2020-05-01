@@ -11,7 +11,7 @@ const Op = db.Sequelize.Op;
 
 // user register
 exports.register = (req, res) => {
-    if (!req.body.email || !req.body.password) {
+    if (!req.body.email || !req.body.password || !req.body.name) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -28,12 +28,19 @@ exports.register = (req, res) => {
         else {
             const user = {
                 email: req.body.email,
+                name: req.body.name,
                 password: hash
             }
 
             User.create(user)
                 .then(data => {
-                    res.send(data);
+                    // create object without password and send
+                    const userCreated = {
+                        id: data.dataValues.id,
+                        email: data.dataValues.email,
+                        name: data.dataValues.name
+                    }
+                    res.send(userCreated);
                 })
                 .catch(err => {
                     res.status(500).send({

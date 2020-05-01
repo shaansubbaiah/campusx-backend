@@ -6,6 +6,13 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false,
         },
+        phone: {
+            type: Sequelize.BIGINT(10),
+            allowNull: false,
+            validate: {
+                is: /^(\+91( )?)?[0-9]{10}$/g,
+            }
+        },
         branch: {
             type: Sequelize.STRING,
             allowNull: false

@@ -7,7 +7,7 @@ const Op = db.Sequelize.Op;
 
 // create and save a new Thing
 createThing = async (req, res) => {
-    if (!req.body.title || !req.body.branch || !req.body.sem) {
+    if (!req.body.title || !req.body.branch || !req.body.sem || !req.body.phone) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -19,6 +19,7 @@ createThing = async (req, res) => {
         title: req.body.title,
         branch: req.body.branch,
         sem: req.body.sem,
+        phone: req.body.phone,
         userId: req.body.userId,
         donation: req.body.donation,
     };
@@ -68,11 +69,6 @@ updateModel = async (req, res) => {
 
 // create and  save a new Book
 exports.createBook = async (req, res) => {
-
-    console.log(req.file);
-
-
-
     let thingId = await createThing(req, res);
 
     if (!req.body.author || !req.body.publisher) {
