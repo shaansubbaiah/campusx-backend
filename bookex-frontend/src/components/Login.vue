@@ -24,7 +24,8 @@
                             <div v-if="errors.has('password')">{{errors.first('password')}}</div>
                         </md-field>
 
-                        <md-button v-on:click="login" class="md-dense md-raised md-primary">REGISTER</md-button>
+                        <md-button v-on:click="login" class="md-dense md-raised md-primary">LOGIN</md-button>
+
                     </div>
                 </form>
 
@@ -64,7 +65,7 @@ export default{
                         .post("/users/login", data)
                         .then(response => {
                             this.message = response.data.message
-                            if(this.message == "Authorization successful"){
+                            if(this.message == 'Authorization successful'){
                                 this.token = response.data.token
                                 console.log(this.token)
                             }

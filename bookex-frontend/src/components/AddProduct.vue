@@ -63,6 +63,12 @@
                 </md-field>
 
                 <md-field class="form-data">
+                  <label for="phone">CONTACT</label>
+                  <md-input name="phone" id="phone" v-model="product.phone" v-validate="{required:true, regex: /^(\+91( )?)?[0-9]{10}$/}"></md-input>
+                  <div v-if="errors.has('phone')">{{errors.first('phone')}}</div>
+                </md-field>
+
+                <md-field class="form-data">
                   <label>IMAGE</label>
                   <md-file v-model="product.image" name="image" id="image" accept="image/*" />
                 </md-field>
@@ -172,6 +178,12 @@
                 </md-field>
 
                 <md-field class="form-data">
+                  <label for="phone">CONTACT</label>
+                  <md-input name="phone" id="phone" v-model="product.phone" v-validate="{required:true, regex: /^(\+91( )?)?[0-9]{10}$/}"></md-input>
+                  <div v-if="errors.has('phone')">{{errors.first('phone')}}</div>
+                </md-field>
+
+                <md-field class="form-data">
                   <label>IMAGE</label>
                   <md-file v-model="product.image" name="image" id="image" accept="image/*" />
                 </md-field>
@@ -208,7 +220,8 @@ export default {
         image: "",
         description: "",
         link: "",
-        donation: null
+        donation: null,
+        phone: ""
       },
       submitted: false
     };
@@ -224,7 +237,8 @@ export default {
                     branch: this.product.branch,
                     publisher: this.product.publisher,
                     image: this.product.image,
-                    donation: this.product.donation
+                    donation: this.product.donation,
+                    phone: this.product.phone
                   };
                   try{
                     await http
@@ -288,7 +302,8 @@ export default {
                     branch: this.product.branch,
                     image: this.product.image,
                     description: this.product.description,
-                    donation: this.product.donation
+                    donation: this.product.donation,
+                    phone: this.product.phone
                   };
                   
                   try{

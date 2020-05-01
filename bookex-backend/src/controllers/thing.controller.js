@@ -68,14 +68,9 @@ updateModel = async (req, res) => {
 
 // create and  save a new Book
 exports.createBook = async (req, res) => {
-
-    console.log(req.file);
-
-
-
     let thingId = await createThing(req, res);
 
-    if (!req.body.author || !req.body.publisher) {
+    if (!req.body.author || !req.body.publisher || !req.body.phone) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -87,6 +82,7 @@ exports.createBook = async (req, res) => {
         author: req.body.author,
         publisher: req.body.publisher,
         image: req.file.path,
+        phone: req.body.phone,
         thingId: thingId
     };
 
@@ -139,7 +135,7 @@ exports.createDrive = async (req, res) => {
 exports.createOther = async (req, res) => {
     let thingId = await createThing(req, res);
 
-    if (!req.body.description || !req.body.image) {
+    if (!req.body.description || !req.body.image || !req.body.phone) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -149,6 +145,7 @@ exports.createOther = async (req, res) => {
     // create Other
     const other = {
         image: req.file.path,
+        phone: req.body.phone,
         description: req.body.description,
         thingId: thingId
     };
