@@ -8,6 +8,13 @@ module.exports = (sequelize, Sequelize) => {
         },
         image: {
             type: Sequelize.STRING,
+        },
+        phone: {
+            type: Sequelize.BIGINT(10),
+            allowNull: false,
+            validate: {
+                is: /^(\+91( )?)?[0-9]{10}$/g,
+            }
         }
     },
         { timestamps: false });

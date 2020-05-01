@@ -7,7 +7,7 @@ const Op = db.Sequelize.Op;
 
 // create and save a new Thing
 createThing = async (req, res) => {
-    if (!req.body.title || !req.body.branch || !req.body.sem || !req.body.phone) {
+    if (!req.body.title || !req.body.branch || !req.body.sem) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -19,7 +19,6 @@ createThing = async (req, res) => {
         title: req.body.title,
         branch: req.body.branch,
         sem: req.body.sem,
-        phone: req.body.phone,
         userId: req.body.userId,
         donation: req.body.donation,
     };
@@ -71,7 +70,7 @@ updateModel = async (req, res) => {
 exports.createBook = async (req, res) => {
     let thingId = await createThing(req, res);
 
-    if (!req.body.author || !req.body.publisher) {
+    if (!req.body.author || !req.body.publisher || !req.body.phone) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -83,6 +82,7 @@ exports.createBook = async (req, res) => {
         author: req.body.author,
         publisher: req.body.publisher,
         image: req.file.path,
+        phone: req.body.phone,
         thingId: thingId
     };
 
@@ -135,7 +135,7 @@ exports.createDrive = async (req, res) => {
 exports.createOther = async (req, res) => {
     let thingId = await createThing(req, res);
 
-    if (!req.body.description || !req.body.image) {
+    if (!req.body.description || !req.body.image || !req.body.phone) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -145,6 +145,7 @@ exports.createOther = async (req, res) => {
     // create Other
     const other = {
         image: req.file.path,
+        phone: req.body.phone,
         description: req.body.description,
         thingId: thingId
     };
