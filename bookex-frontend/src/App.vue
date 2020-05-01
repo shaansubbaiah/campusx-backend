@@ -1,6 +1,12 @@
 <template>
     <div id="app" class="container-fluid">
       <div class="search">
+        <md-button class="md-dense md-raised">
+          <router-link to="/login">LOGIN</router-link>
+        </md-button>
+        <md-button class="md-dense md-raised">
+          <router-link to="/register">REGISTER</router-link>
+        </md-button>
 
         <div id="logo-bg">
           <h3 id="logo">BOOKEX</h3>

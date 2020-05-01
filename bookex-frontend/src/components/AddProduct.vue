@@ -18,17 +18,20 @@
                 
                 <md-field class="form-data">
                   <label for="title">TITLE</label>
-                  <md-input name="title" id="title" v-model="product.title"></md-input>
+                  <md-input name="title" id="title" v-model="product.title" v-validate="{required:true}"></md-input>
+                  <div v-if="errors.has('title')">{{errors.first('title')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
                   <label for="author">AUTHOR</label>
-                  <md-input name="author" id="author" v-model="product.author"></md-input>
+                  <md-input name="author" id="author" v-model="product.author" v-validate="{required:true, regex: /[A-Za-z]+/}"></md-input>
+                  <div v-if="errors.has('author')">{{errors.first('author')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
                   <label for="publisher">PUBLISHER</label>
-                  <md-input name="publisher" id="publisher" v-model="product.publisher"></md-input>
+                  <md-input name="publisher" id="publisher" v-model="product.publisher" v-validate="{required:true}"></md-input>
+                  <div v-if="errors.has('publisher')">{{errors.first('publisher')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
@@ -79,17 +82,20 @@
 
                 <md-field class="form-data">
                   <label for="title">TITLE</label>
-                  <md-input name="title" id="title" v-model="product.title"></md-input>
+                  <md-input name="title" id="title" v-model="product.title" v-validate="{required:true}"></md-input>
+                  <div v-if="errors.has('title')">{{errors.first('title')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
                   <label for="url">LINK</label>
-                  <md-input name="url" id="url" v-model="product.url"></md-input>
+                  <md-input name="url" id="url" v-model="product.url" v-validate="{required:true,url: {require_protocol: true }}"></md-input>
+                  <div v-if="errors.has('url')">{{errors.first('url')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
                   <label for="description">DESCRIPTION</label>
-                  <md-input name="description" id="description" v-model="product.description"></md-input>
+                  <md-input name="description" id="description" v-model="product.description" v-validate="{required:true}"></md-input>
+                  <div v-if="errors.has('description')">{{errors.first('description')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
@@ -127,12 +133,14 @@
 
                 <md-field class="form-data">
                   <label for="title">TITLE</label>
-                  <md-input name="title" id="title" v-model="product.title"></md-input>
+                  <md-input name="title" id="title" v-model="product.title" v-validate="{required:true}"></md-input>
+                  <div v-if="errors.has('title')">{{errors.first('title')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
                   <label for="description">DESCRIPTION</label>
-                  <md-input name="description" id="description" v-model="product.description"></md-input>
+                  <md-input name="description" id="description" v-model="product.description" v-validate="{required:true}"></md-input>
+                  <div v-if="errors.has('description')">{{errors.first('description')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
@@ -190,7 +198,6 @@ export default {
   name: "add-product",
   data() {
     return {
-      image: "",
       product: {
         id: 0,
         title: "",
@@ -207,90 +214,102 @@ export default {
     };
   },
   methods: {
-    async saveBook() {
-      var data = {
-        title: this.product.title,
-        author: this.product.author,
-        sem: this.product.sem,
-        branch: this.product.branch,
-        publisher: this.product.publisher,
-        image: this.product.image,
-        donation: this.product.donation
-      };
-      try{
-        await http
-        .post("/things/upload-book", data)
-        .then(response => {
-          this.book.id = response.data.id;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-      }
-      catch(err){
-        console.log(err);
-      }
- 
-      this.submitted = true;
-      this.$router.push('/');
+      saveBook() {
+       this.$validator.validate().then(async isValid => {
+                if (isValid) {
+                  var data = {
+                    title: this.product.title,
+                    author: this.product.author,
+                    sem: this.product.sem,
+                    branch: this.product.branch,
+                    publisher: this.product.publisher,
+                    image: this.product.image,
+                    donation: this.product.donation
+                  };
+                  try{
+                    await http
+                    .post("/things/upload-book", data)
+                    .then(response => {
+                      this.book.id = response.data.id;
+                      console.log(response.data);
+                    })
+                    .catch(e => {
+                      console.log(e);
+                    });
+                  }
+                  catch(err){
+                    console.log(err);
+                  }
+            
+                  this.submitted = true;
+                  this.$router.push('/');
+                }
+            });
     },
 
-    async saveDrive(){
-      var data = {
-        title: this.product.title,
-        sem: this.product.sem,
-        branch: this.product.branch,
-        url: this.product.url,
-        description: this.product.description
-      };
-      
-      try{
-        await http
-        .post("/things/upload-drive", data)
-        .then(response => {
-          this.drive.id = response.data.id;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-      }
-      catch(err){
-        console.log(err);
-      }
- 
-      this.submitted = true;
-      this.$router.push('/');
+    saveDrive(){
+      this.$validator.validate().then(async isValid => {
+                if (isValid) {
+                  var data = {
+                    title: this.product.title,
+                    sem: this.product.sem,
+                    branch: this.product.branch,
+                    url: this.product.url,
+                    description: this.product.description
+                  };
+                  
+                  try{
+                    await http
+                    .post("/things/upload-drive", data)
+                    .then(response => {
+                      this.drive.id = response.data.id;
+                      console.log(response.data);
+                    })
+                    .catch(e => {
+                      console.log(e);
+                    });
+                  }
+                  catch(err){
+                    console.log(err);
+                  }
+            
+                  this.submitted = true;
+                  this.$router.push('/');
+                }
+            }); 
     },
 
-    async saveOther(){
-      var data = {
-        title: this.product.title,
-        sem: this.product.sem,
-        branch: this.product.branch,
-        image: this.product.image,
-        description: this.product.description,
-        donation: this.product.donation
-      };
-      
-      try{
-        await http
-        .post("/things/upload-other", data)
-        .then(response => {
-          this.drive.id = response.data.id;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-      }
-      catch(err){
-        console.log(err);
-      }
- 
-      this.submitted = true;
-      this.$router.push('/');
+    saveOther(){
+      this.$validator.validate().then(async isValid => {
+                if (isValid) {
+                  var data = {
+                    title: this.product.title,
+                    sem: this.product.sem,
+                    branch: this.product.branch,
+                    image: this.product.image,
+                    description: this.product.description,
+                    donation: this.product.donation
+                  };
+                  
+                  try{
+                    await http
+                    .post("/things/upload-other", data)
+                    .then(response => {
+                      this.drive.id = response.data.id;
+                      console.log(response.data);
+                    })
+                    .catch(e => {
+                      console.log(e);
+                    });
+                  }
+                  catch(err){
+                    console.log(err);
+                  }
+            
+                  this.submitted = true;
+                  this.$router.push('/');
+                }
+            });
     },
 
     newProduct() {
