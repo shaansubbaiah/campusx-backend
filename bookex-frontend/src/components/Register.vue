@@ -14,25 +14,25 @@
                         <md-field class="form-data">
                             <label for="name">USERNAME</label>
                             <md-input name="name" id="name" v-model="user.name" v-validate="'required|min:3|max:20'"></md-input>
-                            <div v-if="submitted && errors.has('name')">{{errors.first('name')}}</div>
+                            <div v-if="errors.has('name')">{{errors.first('name')}}</div>
                         </md-field>
 
                         <md-field class="form-data">
                             <label for="email">EMAIL</label>
                             <md-input name="email" id="email" v-model="user.email" v-validate="'required|email|max:50'"></md-input>
-                            <div v-if="submitted && errors.has('email')">{{errors.first('email')}}</div>
+                            <div v-if="errors.has('email')">{{errors.first('email')}}</div>
                         </md-field>
 
                         <md-field class="form-data">
                             <label for="phone">CONTACT</label>
                             <md-input name="phone" id="phone" v-model="user.phone" v-validate="{required:true, regex: /^(\+91( )?)?[0-9]{10}$/}"></md-input>
-                            <div v-if="submitted && errors.has('phone')">{{errors.first('phone')}}</div>
+                            <div v-if="errors.has('phone')">{{errors.first('phone')}}</div>
                         </md-field>
 
                         <md-field class="form-data">
                             <label for="password">PASSWORD</label>
                             <md-input name="password" id="password" v-model="user.password" v-validate="'required|min:8|max:20'"></md-input>
-                            <div v-if="submitted && errors.has('password')">{{errors.first('password')}}</div>
+                            <div v-if="errors.has('password')">{{errors.first('password')}}</div>
                         </md-field>
 
                         <md-button v-on:click="register" class="md-dense md-raised md-primary">REGISTER</md-button>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-//import http from "../http-common";
+import http from "../http-common";
 
 export default{
     name: "Register",
@@ -61,10 +61,30 @@ export default{
     },
     methods: {
         register(){
-            this.submitted = true;
-            this.$validator.validate().then(isValid => {
+            this.$validator.validate().then(async isValid => {
                 if (isValid) {
-                    console.log("valid")
+                    var data = {
+                        name: this.user.name,
+                        email: this.user.email,
+                        phone: this.user.phone,
+                        password: this.user.password
+                    }
+                    try{
+                        await http
+                        .post("/users/register", data)
+                        .then(response => {
+                            console.log(response.data);
+                        })
+                        .catch(e => {
+                        console.log(e);
+                        });
+                    }
+                    catch(err){
+                        console.log(err);
+                    }
+                
+                    this.submitted = true;
+                    this.$router.push('/');
                 }
             });
         }
