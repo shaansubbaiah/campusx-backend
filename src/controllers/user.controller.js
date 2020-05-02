@@ -110,7 +110,10 @@ exports.login = (req, res) => {
 
                     return res.status(200).send({
                         message: `Authorization successful.`,
-                        token: token
+                        token: token,
+                        email: data.dataValues.email,
+                        id: data.dataValues.id,
+                        name: data.dataValues.name
                     })
                 }
                 res.status(401).send({
