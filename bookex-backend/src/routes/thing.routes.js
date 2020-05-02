@@ -9,7 +9,7 @@ module.exports = app => {
     // create new things - REQ AUTH
     router.post('/upload-book', checkAuth, upload.single('image'), things.createBook);
     router.post('/upload-other', checkAuth, upload.single('image'), things.createOther);
-    router.post('/upload-drive', checkAuth, upload.none, things.createDrive);
+    router.post('/upload-drive', checkAuth, things.createDrive);
 
     // retrieve all Things
     router.get('/', things.findAll);

@@ -14,24 +14,24 @@
           <md-tab md-label="BOOK">
             <div v-if="!submitted">
 
-              <form>
+              <form @submit.prevent="saveBook('book')" data-vv-scope="book">
                 
                 <md-field class="form-data">
                   <label for="title">TITLE</label>
                   <md-input name="title" id="title" v-model="product.title" v-validate="{required:true}"></md-input>
-                  <div v-if="errors.has('title')">{{errors.first('title')}}</div>
+                  <div v-if="errors.has('book.title')">{{errors.first('book.title')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
                   <label for="author">AUTHOR</label>
                   <md-input name="author" id="author" v-model="product.author" v-validate="{required:true, regex: /[A-Za-z]+/}"></md-input>
-                  <div v-if="errors.has('author')">{{errors.first('author')}}</div>
+                  <div v-if="errors.has('book.author')">{{errors.first('book.author')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
                   <label for="publisher">PUBLISHER</label>
                   <md-input name="publisher" id="publisher" v-model="product.publisher" v-validate="{required:true}"></md-input>
-                  <div v-if="errors.has('publisher')">{{errors.first('publisher')}}</div>
+                  <div v-if="errors.has('book.publisher')">{{errors.first('book.publisher')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
@@ -65,7 +65,7 @@
                 <md-field class="form-data">
                   <label for="phone">CONTACT</label>
                   <md-input name="phone" id="phone" v-model="product.phone" v-validate="{required:true, regex: /^(\+91( )?)?[0-9]{10}$/}"></md-input>
-                  <div v-if="errors.has('phone')">{{errors.first('phone')}}</div>
+                  <div v-if="errors.has('book.phone')">{{errors.first('book.phone')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
@@ -74,7 +74,7 @@
                 </md-field>
                  
                 <span>
-                  <md-button v-show="product.title && product.author && product.publisher && product.sem && product.branch && product.donation && product.image" v-on:click="saveBook" class="md-dense md-raised md-primary">SUBMIT</md-button>
+                  <md-button type="submit" v-show="product.title && product.author && product.publisher && product.sem && product.branch && product.donation && product.image" class="md-dense md-raised md-primary">SUBMIT</md-button>
                   <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
                 </span>
 
@@ -84,24 +84,24 @@
 
           <md-tab md-label="LINK">
             <div v-if="!submitted">
-              <form class="md-layout">
+              <form @submit.prevent="saveDrive('drive')" data-vv-scope="drive">
 
                 <md-field class="form-data">
                   <label for="title">TITLE</label>
                   <md-input name="title" id="title" v-model="product.title" v-validate="{required:true}"></md-input>
-                  <div v-if="errors.has('title')">{{errors.first('title')}}</div>
+                  <div v-if="errors.has('drive.title')">{{errors.first('drive.title')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
                   <label for="url">LINK</label>
                   <md-input name="url" id="url" v-model="product.url" v-validate="{required:true,url: {require_protocol: true }}"></md-input>
-                  <div v-if="errors.has('url')">{{errors.first('url')}}</div>
+                  <div v-if="errors.has('drive.url')">{{errors.first('drive.url')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
                   <label for="description">DESCRIPTION</label>
                   <md-input name="description" id="description" v-model="product.description" v-validate="{required:true}"></md-input>
-                  <div v-if="errors.has('description')">{{errors.first('description')}}</div>
+                  <div v-if="errors.has('drive.description')">{{errors.first('drive.description')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
@@ -125,7 +125,7 @@
                 </md-field>
                 
                 <span>
-                  <md-button v-show="product.title && product.url && product.description && product.sem && product.branch" v-on:click="saveDrive" class="md-dense md-raised md-primary">SUBMIT</md-button>
+                  <md-button type="submit" v-show="product.title && product.url && product.description && product.sem && product.branch" class="md-dense md-raised md-primary">SUBMIT</md-button>
                   <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
                 </span>
 
@@ -135,18 +135,18 @@
 
           <md-tab md-label="OTHERS">
             <div v-if="!submitted">
-              <form class="md-layout">
+              <form @submit.prevent="saveOther('other')" data-vv-scope="other">
 
                 <md-field class="form-data">
                   <label for="title">TITLE</label>
                   <md-input name="title" id="title" v-model="product.title" v-validate="{required:true}"></md-input>
-                  <div v-if="errors.has('title')">{{errors.first('title')}}</div>
+                  <div v-if="errors.has('other.title')">{{errors.first('other.title')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
                   <label for="description">DESCRIPTION</label>
                   <md-input name="description" id="description" v-model="product.description" v-validate="{required:true}"></md-input>
-                  <div v-if="errors.has('description')">{{errors.first('description')}}</div>
+                  <div v-if="errors.has('other.description')">{{errors.first('other.description')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
@@ -180,7 +180,7 @@
                 <md-field class="form-data">
                   <label for="phone">CONTACT</label>
                   <md-input name="phone" id="phone" v-model="product.phone" v-validate="{required:true, regex: /^(\+91( )?)?[0-9]{10}$/}"></md-input>
-                  <div v-if="errors.has('phone')">{{errors.first('phone')}}</div>
+                  <div v-if="errors.has('other.phone')">{{errors.first('other.phone')}}</div>
                 </md-field>
 
                 <md-field class="form-data">
@@ -189,7 +189,7 @@
                 </md-field>
                 
                 <span>
-                  <md-button v-show="product.title && product.description && product.sem && product.branch && product.donation && product.image" v-on:click="saveOther" class="md-dense md-raised md-primary">SUBMIT</md-button>
+                  <md-button type="submit" v-show="product.title && product.description && product.sem && product.branch && product.donation && product.image" class="md-dense md-raised md-primary">SUBMIT</md-button>
                   <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
                 </span>
 
@@ -221,14 +221,15 @@ export default {
         description: "",
         link: "",
         donation: null,
-        phone: ""
+        phone: "",
+        userId: ""
       },
       submitted: false
     };
   },
   methods: {
-      saveBook() {
-       this.$validator.validate().then(async isValid => {
+      saveBook(scope) {
+       this.$validator.validateAll(scope).then(async isValid => {
                 if (isValid) {
                   var data = {
                     title: this.product.title,
@@ -238,11 +239,12 @@ export default {
                     publisher: this.product.publisher,
                     image: this.product.image,
                     donation: this.product.donation,
-                    phone: this.product.phone
+                    phone: this.product.phone,
+                    userId: this.$store.state.userId
                   };
                   try{
                     await http
-                    .post("/things/upload-book", data)
+                    .post("/things/upload-book", data , { headers: { Authorization: 'Bearer ' + this.$store.state.token } } )
                     .then(response => {
                       this.book.id = response.data.id;
                       console.log(response.data);
@@ -251,7 +253,7 @@ export default {
                       console.log(e);
                     });
                   }
-                  catch(err){
+                  catch(err){ 
                     console.log(err);
                   }
             
@@ -261,20 +263,21 @@ export default {
             });
     },
 
-    saveDrive(){
-      this.$validator.validate().then(async isValid => {
+    saveDrive(scope){
+      this.$validator.validateAll(scope).then(async isValid => {
                 if (isValid) {
                   var data = {
                     title: this.product.title,
                     sem: this.product.sem,
                     branch: this.product.branch,
                     url: this.product.url,
-                    description: this.product.description
+                    description: this.product.description,
+                    userId: this.$store.state.userId
                   };
                   
                   try{
                     await http
-                    .post("/things/upload-drive", data)
+                    .post("/things/upload-drive", data, { headers : { Authorization: 'Bearer ' + this.$store.state.token } })
                     .then(response => {
                       this.drive.id = response.data.id;
                       console.log(response.data);
@@ -293,8 +296,8 @@ export default {
             }); 
     },
 
-    saveOther(){
-      this.$validator.validate().then(async isValid => {
+    saveOther(scope){
+      this.$validator.validateAll(scope).then(async isValid => {
                 if (isValid) {
                   var data = {
                     title: this.product.title,
@@ -303,12 +306,13 @@ export default {
                     image: this.product.image,
                     description: this.product.description,
                     donation: this.product.donation,
-                    phone: this.product.phone
+                    phone: this.product.phone,
+                    userId: this.$store.state.userId
                   };
                   
                   try{
                     await http
-                    .post("/things/upload-other", data)
+                    .post("/things/upload-other", data, { headers: { Authorization: 'Bearer ' + this.$store.state.token } })
                     .then(response => {
                       this.drive.id = response.data.id;
                       console.log(response.data);

@@ -69,13 +69,11 @@ export default{
                         await http
                         .post("/users/register", data)
                         .then(response => {
-                            if(response.data.message ==`Email has already registered.`){
+                            if(response.data.message ==`Email has already registered`){
                                 this.message = response.data.message
                             }
                             else{
-                                this.$store.state.username = response.data.name
-                                this.$store.state.userId = response.data.id
-                                this.message = 'Successful'
+                                this.message = 'Successful..Login to continue'
                             }
                             console.log(response.data);
                         })

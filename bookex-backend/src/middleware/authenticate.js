@@ -6,6 +6,7 @@ module.exports = (req, res, next) => {
         // example Authentication header -> "Bearer <JWT token>"
         // extract only the token
         const token = req.headers.authorization.split(" ")[1];
+        console.log(token)
         console.log(`\ntoken: {token}\n`);
 
         // verify token is valid
@@ -15,6 +16,7 @@ module.exports = (req, res, next) => {
         next();
     }
     catch (error) {
+        console.log("error")
         res.status(401).send({
             message: `Auth Failed`
         })

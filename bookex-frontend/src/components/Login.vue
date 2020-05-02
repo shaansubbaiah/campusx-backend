@@ -65,11 +65,11 @@ export default{
                         .post("/users/login", data)
                         .then(response => {
                             this.message = response.data.message
-                            if(this.message == 'Authorization successful'){
+                            if(response.status){
                                 this.$store.state.username = response.data.name
                                 this.$store.state.userId = response.data.id
                                 this.$store.state.token = response.data.token
-                                console.log(this.token)
+                                console.log(this.$store.state.token)
                             }
                         })
                         .catch(e => {

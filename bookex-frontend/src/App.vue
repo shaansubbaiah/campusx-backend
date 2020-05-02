@@ -8,6 +8,7 @@
         <md-button class="md-dense md-raised">
           <router-link to="/register">REGISTER</router-link>
         </md-button>
+        <md-button v-show="this.$store.state.userId" class="md-dense md-raised" v-on:click="Logout">LOGOUT</md-button>
 
         <div id="logo-bg">
           <h3 id="logo">BOOKEX</h3>
@@ -165,20 +166,15 @@ export default {
   name: "products-list",
   data() {
     return {
-      products: {},
-      title: ""
+      products: {}
     };
   },
   methods: {
     /* eslint-disable no-console */
     async retrieveProducts() {
-      var data = {
-        title: this.title
-      };
-
       try{
         await http
-        .get("/things",data)
+        .get("/users/"+this.$store.state.userId+"/things") 
         .then(response => {
           this.products = response.data; // JSON are parsed automatically.
           console.log(response.data);
@@ -201,6 +197,11 @@ export default {
         .catch(e => {
           console.log(e);
         })
+    },
+    Logout(){
+      this.$store.state.username = "Stranger"
+      this.$store.state.userId = ""
+      this.$store.state.token = ""
     }
   },
   mounted() {
