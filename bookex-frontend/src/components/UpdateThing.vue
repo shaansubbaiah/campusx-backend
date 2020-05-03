@@ -190,7 +190,7 @@ export default {
             }
             try{
                 await http
-                .put("/things/"+id,data)
+                .put("/things/"+id,data,{ headers: { Authorization: 'Bearer ' + this.$store.state.token } })
                 .then(response => {
                     console.log(response.data);
                 })
@@ -214,7 +214,7 @@ export default {
             }
             try{
                 await http
-                .put("/things/"+id,data)
+                .put("/things/"+id,data,{ headers: { Authorization: 'Bearer ' + this.$store.state.token } })
                 .then(response => {
                     this.retrieveProduct();
                     console.log(response.data);
@@ -239,7 +239,7 @@ export default {
             }
             try{
                 await http
-                .put("/things/"+id,data)
+                .put("/things/"+id,data,{ headers: { Authorization: 'Bearer ' + this.$store.state.token } })
                 .then(response => {
                     this.retrieveProduct();
                     console.log(response.data);

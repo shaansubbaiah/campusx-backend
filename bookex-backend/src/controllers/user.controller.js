@@ -7,6 +7,9 @@ const apiConfig = require('../config/api.config');
 const db = require('../models');
 const User = db.users;
 const Thing = db.things;
+const Book = db.books;
+const Drive = db.drives;
+const Other = db.others;
 const Op = db.Sequelize.Op;
 
 // user register
@@ -196,7 +199,8 @@ exports.findUserThings = (req, res) => {
     console.log(req.userData);
 
     Thing.findAll({
-        where: { userId: id }
+        where: { userId: id },
+        include: [Book, Other, Drive]
     })
         .then(data => {
             res.send(data);

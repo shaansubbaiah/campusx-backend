@@ -66,10 +66,12 @@ export default{
                         .then(response => {
                             this.message = response.data.message
                             if(response.status){
-                                this.$store.state.username = response.data.name
-                                this.$store.state.userId = response.data.id
-                                this.$store.state.token = response.data.token
-                                console.log(this.$store.state.token)
+                                var persisted_state = {
+                                    name : response.data.name,
+                                    id : response.data.id,
+                                    tk : response.data.token
+                                }
+                                this.$store.commit('Login',persisted_state)
                             }
                         })
                         .catch(e => {

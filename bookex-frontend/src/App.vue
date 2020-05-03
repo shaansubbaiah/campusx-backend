@@ -2,10 +2,10 @@
     <div id="app" class="container-fluid">
       <h3>Hey {{this.$store.state.username}}!!</h3>
       <div class="search">
-        <md-button class="md-dense md-raised">
+        <md-button v-show="!this.$store.state.userId" class="md-dense md-raised">
           <router-link to="/login">LOGIN</router-link>
         </md-button>
-        <md-button class="md-dense md-raised">
+        <md-button v-show="!this.$store.state.userId" class="md-dense md-raised">
           <router-link to="/register">REGISTER</router-link>
         </md-button>
         <md-button v-show="this.$store.state.userId" class="md-dense md-raised" v-on:click="Logout">LOGOUT</md-button>
@@ -14,13 +14,13 @@
           <h3 id="logo">BOOKEX</h3>
         </div>
 
-        <md-button class="md-fab md-fab-bottom-right md-primary md-fixed">
+        <md-button v-show="this.$store.state.userId" class="md-fab md-fab-bottom-right md-primary md-fixed">
           <router-link to="/add">
             <md-icon>add</md-icon>
           </router-link>
         </md-button>
 
-        <div class="user-books">
+        <div v-show="this.$store.state.userId" class="user-books">
           <div class="card-expansion">
             <md-card>
               <md-card-expand>
@@ -170,13 +170,12 @@ export default {
     };
   },
   methods: {
-    /* eslint-disable no-console */
     async retrieveProducts() {
       try{
         await http
         .get("/users/"+this.$store.state.userId+"/things") 
         .then(response => {
-          this.products = response.data; // JSON are parsed automatically.
+          this.products = response.data;
           console.log(response.data);
         })
         .catch(e => { 
@@ -189,7 +188,7 @@ export default {
     },
     deleteProduct(id) {
       http
-        .delete("/things/"+id)
+        .delete("/things/"+id, { headers: { Authorization: 'Bearer ' + this.$store.state.token } } )
         .then(response => {
           this.retrieveProducts();
           console.log(response.data);
@@ -199,9 +198,7 @@ export default {
         })
     },
     Logout(){
-      this.$store.state.username = "Stranger"
-      this.$store.state.userId = ""
-      this.$store.state.token = ""
+      this.$store.commit('Logout')
     }
   },
   mounted() {
