@@ -1,13 +1,14 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const checkAuth = require('../middleware/authenticate');
 const apiConfig = require('../config/api.config');
 
 const db = require('../models');
 const User = db.users;
 const Thing = db.things;
-const Op = db.Sequelize.Op;
+const Book = db.books;
+const Drive = db.drives;
+const Other = db.others;
 
 // user register
 exports.register = async (req, res) => {
@@ -196,7 +197,8 @@ exports.findUserThings = (req, res) => {
     console.log(req.userData);
 
     Thing.findAll({
-        where: { userId: id }
+        where: { userId: id },
+        include: [Book, Other, Drive]
     })
         .then(data => {
             res.send(data);
