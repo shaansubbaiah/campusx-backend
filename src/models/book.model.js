@@ -10,11 +10,15 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        image: {
-            type: Sequelize.TEXT,
+        phone: {
+            type: Sequelize.BIGINT(10),
+            allowNull: false,
             validate: {
-                isURL: true
+                is: /^(\+91( )?)?[0-9]{10}$/g,
             }
+        },
+        image: {
+            type: Sequelize.STRING,
         }
     },
         { timestamps: false });

@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -9,12 +10,10 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-// parse requests of content-type - application/json
 app.use(bodyParser.json());
-
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('dev'));
+app.use('/uploads', express.static('uploads'));
 
 const db = require('./models');
 

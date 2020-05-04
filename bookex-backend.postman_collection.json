@@ -1,0 +1,396 @@
+{
+	"info": {
+		"_postman_id": "fda59e2b-b5ba-430f-b699-f230467af2c9",
+		"name": "bookex-backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/api/users/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "a@b.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "apple",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "eve",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/api/users/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/users/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "a@b.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "apple",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/api/users/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				},
+				"description": "login user"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/things/upload-book",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAYi5jb20iLCJpZCI6MSwiaWF0IjoxNTg4NTk4NTgxLCJleHAiOjE1ODg2ODQ5ODF9.LHrloCs-xUXZXXZZcsv32D2Q9FvpClFpwMeTK8MSIt8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": " NEWBOOK",
+							"type": "text"
+						},
+						{
+							"key": "publisher",
+							"value": "htththth",
+							"type": "text"
+						},
+						{
+							"key": "author",
+							"value": "ujujujuju",
+							"type": "text"
+						},
+						{
+							"key": "sem",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "branch",
+							"value": "cse",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/shaan/Downloads/WhatsApp Image 2020-04-09 at 7.04.44 PM.jpeg"
+						},
+						{
+							"key": "donation",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "userId",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "1234567890",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/api/things/upload-book",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"things",
+						"upload-book"
+					]
+				},
+				"description": "upload book. NEEDS JWT TOKEN"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/things/upload-other",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAYi5jb20iLCJpZCI6MSwiaWF0IjoxNTg4NTk4NTgxLCJleHAiOjE1ODg2ODQ5ODF9.LHrloCs-xUXZXXZZcsv32D2Q9FvpClFpwMeTK8MSIt8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "OTHERTHING",
+							"type": "text"
+						},
+						{
+							"key": "sem",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "branch",
+							"value": "cse",
+							"type": "text"
+						},
+						{
+							"key": "donation",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "userId",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "1234567890",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/shaan/Downloads/denis-istomin-soulmate888.jpg"
+						},
+						{
+							"key": "description",
+							"value": "some other thing i uploaded",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/api/things/upload-other",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"things",
+						"upload-other"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/things/upload-drive",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAYi5jb20iLCJpZCI6MSwiaWF0IjoxNTg4NTk4NTgxLCJleHAiOjE1ODg2ODQ5ODF9.LHrloCs-xUXZXXZZcsv32D2Q9FvpClFpwMeTK8MSIt8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "SOMEDRIVE",
+							"type": "text"
+						},
+						{
+							"key": "sem",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "branch",
+							"value": "cse",
+							"type": "text"
+						},
+						{
+							"key": "donation",
+							"value": "1",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "userId",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "some other thing i uploaded",
+							"type": "text"
+						},
+						{
+							"key": "url",
+							"value": "www.google.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/api/things/upload-drive",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"things",
+						"upload-drive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/things/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/things/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"things",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/users/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAYi5jb20iLCJpZCI6MSwiaWF0IjoxNTg4MTczNzM3LCJleHAiOjE1ODgyNjAxMzd9.msaL1LwcmMqbktru7me2YY0GnTl3yBKh7cWSMleJoQ0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAYi5jb20iLCJpZCI6MSwiaWF0IjoxNTg4MDg4OTEzLCJleHAiOjE1ODgwOTI1MTN9.cVd_KQ39gxAKe0Vdu-92GY4LqfgSDd-Kk8hd3AnCi4E",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/users/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/things/3",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAYi5jb20iLCJpZCI6MSwiaWF0IjoxNTg4MjMxNDg3LCJleHAiOjE1ODgzMTc4ODd9.O4EboYAfFqyOD_Rh_aw4CBqFcHlxlWiC4CBM2wIAUB8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/things/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"things",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

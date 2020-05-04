@@ -8,6 +8,7 @@ const Op = db.Sequelize.Op;
 // create and save a new Thing
 createThing = async (req, res) => {
     if (!req.body.title || !req.body.branch || !req.body.sem) {
+        console.log('here');
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -68,20 +69,21 @@ updateModel = async (req, res) => {
 
 // create and  save a new Book
 exports.createBook = async (req, res) => {
-    let thingId = await createThing(req, res);
-
-    if (!req.body.author || !req.body.publisher || !req.body.image) {
+    if (!req.body.author || !req.body.publisher || !req.body.phone) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
         return;
     }
 
+    let thingId = await createThing(req, res);
+
     // create Book
     const book = {
         author: req.body.author,
         publisher: req.body.publisher,
-        image: req.body.image,
+        image: req.file.path,
+        phone: req.body.phone,
         thingId: thingId
     };
 
@@ -99,14 +101,15 @@ exports.createBook = async (req, res) => {
 
 // create and  save a new Drive
 exports.createDrive = async (req, res) => {
-    let thingId = await createThing(req, res);
-
     if (!req.body.url || !req.body.description) {
+        console.log(req.body);
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
         return;
     }
+
+    let thingId = await createThing(req, res);
 
     // create Drive
     const drive = {
@@ -132,18 +135,19 @@ exports.createDrive = async (req, res) => {
 
 // create and  save a new Other
 exports.createOther = async (req, res) => {
-    let thingId = await createThing(req, res);
-
-    if (!req.body.description || !req.body.image) {
+    if (!req.body.description || !req.body.phone) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
         return;
     }
 
+    let thingId = await createThing(req, res);
+
     // create Other
     const other = {
-        image: req.body.image,
+        image: req.file.path,
+        phone: req.body.phone,
         description: req.body.description,
         thingId: thingId
     };
@@ -172,7 +176,6 @@ exports.findAll = (req, res) => {
     let matchSem = sem ? { sem: { [Op.like]: `%${sem}%` } } : null;
     let matchBranch = branch ? { branch: { [Op.like]: `%${branch}%` } } : null;
     let matchDonation = donation ? { donation: { [Op.eq]: donation } } : null;
-    console.log(`donation: ${donation}`);
 
     let model;
     if (type == 'book')

@@ -1,4 +1,5 @@
 const checkAuth = require('../middleware/authenticate');
+const upload = require('../middleware/upload');
 
 module.exports = app => {
     const things = require('../controllers/thing.controller');
@@ -6,9 +7,10 @@ module.exports = app => {
     let router = require('express').Router();
 
     // create new things - REQ AUTH
-    router.post('/upload-book', checkAuth, things.createBook);
-    router.post('/upload-drive', checkAuth, things.createDrive);
-    router.post('/upload-other', checkAuth, things.createOther);
+    // router.post('/upload-book', checkAuth, upload.single('image'), things.createBook);
+    router.post('/upload-book', checkAuth, upload.single('image'), things.createBook);
+    router.post('/upload-other', checkAuth, upload.single('image'), things.createOther);
+    router.post('/upload-drive', checkAuth, upload.none(), things.createDrive);
 
     // retrieve all Things
     router.get('/', things.findAll);

@@ -1,46 +1,71 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const checkAuth = require('../middleware/authenticate');
+const apiConfig = require('../config/api.config');
 
 const db = require('../models');
 const User = db.users;
 const Thing = db.things;
-const Op = db.Sequelize.Op;
+const Book = db.books;
+const Drive = db.drives;
+const Other = db.others;
 
 // user register
-exports.register = (req, res) => {
-    if (!req.body.email || !req.body.password) {
+exports.register = async (req, res) => {
+    if (!req.body.email || !req.body.password || !req.body.name) {
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
         return;
     }
 
-    // encrypt password with bcrypt
-    bcrypt.hash(req.body.password, 10, (err, hash) => {
-        if (err) {
-            return res.status(500).send({
-                message: err.message || `Error occurred hashing password.`
-            })
-        }
-        else {
-            const user = {
-                email: req.body.email,
-                password: hash
-            }
+    // check if email already in db
+    let isNewEmail = await User.findOne({ where: { email: req.body.email } })
+        .then(data => {
+            if (data !== null)
+                return false;
+            else
+                return true;
+        })
 
-            User.create(user)
-                .then(data => {
-                    res.send(data);
+    // encrypt password with bcrypt
+    if (isNewEmail) {
+        bcrypt.hash(req.body.password, 10, (err, hash) => {
+            if (err) {
+                return res.status(500).send({
+                    message: err.message || `Error occurred hashing password.`
                 })
-                .catch(err => {
-                    res.status(500).send({
-                        message: err.message || `Error occurred while creating the User.`
+            }
+            else {
+                const user = {
+                    email: req.body.email,
+                    name: req.body.name,
+                    password: hash
+                }
+
+                User.create(user)
+                    .then(data => {
+                        // create object without password and send
+                        const userCreated = {
+                            id: data.dataValues.id,
+                            email: data.dataValues.email,
+                            name: data.dataValues.name
+                        }
+                        res.send(userCreated);
+                    })
+                    .catch(err => {
+                        res.status(500).send({
+                            message: err.message || `Error occurred while creating the User.`
+                        });
                     });
-                });
-        }
-    })
+            }
+        })
+    }
+    else {
+        res.status(500).send({
+            message: `Email has already registered.`
+        });
+    }
 };
 
 
@@ -78,7 +103,7 @@ exports.login = (req, res) => {
                             email: data.dataValues.email,
                             id: data.dataValues.id
                         },
-                        "secretPass",
+                        apiConfig.JWT_SECRET,
                         {
                             expiresIn: "24h"
                         }
@@ -86,7 +111,10 @@ exports.login = (req, res) => {
 
                     return res.status(200).send({
                         message: `Authorization successful.`,
-                        token: token
+                        token: token,
+                        email: data.dataValues.email,
+                        id: data.dataValues.id,
+                        name: data.dataValues.name
                     })
                 }
                 res.status(401).send({
@@ -153,7 +181,11 @@ exports.findOne = (req, res) => {
 
     User.findByPk(id)
         .then(data => {
-            res.send(data);
+            res.send({
+                email: data.dataValues.email,
+                id: data.dataValues.id,
+                name: data.dataValues.name
+            });
         })
         .catch(err => {
             res.status(500).send({
@@ -169,7 +201,8 @@ exports.findUserThings = (req, res) => {
     console.log(req.userData);
 
     Thing.findAll({
-        where: { userId: id }
+        where: { userId: id },
+        include: [Book, Other, Drive]
     })
         .then(data => {
             res.send(data);

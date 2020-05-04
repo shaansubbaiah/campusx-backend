@@ -7,9 +7,13 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
         image: {
-            type: Sequelize.TEXT,
+            type: Sequelize.STRING,
+        },
+        phone: {
+            type: Sequelize.BIGINT(10),
+            allowNull: false,
             validate: {
-                isURL: true
+                is: /^(\+91( )?)?[0-9]{10}$/g,
             }
         }
     },
