@@ -1,21 +1,20 @@
 <template>
   <div>
-
     <div class="search">
       <md-toolbar class="md-transparent" id="search-bar">
         <md-field>
           <label for="title">Search..</label>
           <md-input name="title" id="title" v-model="stitle"></md-input>
           <md-button v-on:click="retrieveProducts" class="md-icon-button" id="search-icon">
-          <md-icon>search</md-icon>
-        </md-button>
+            <md-icon>search</md-icon>
+          </md-button>
         </md-field>
       </md-toolbar>
 
       <md-button v-on:click="retrieveProducts" class="md-dense md-raised">FILTER</md-button>
       <md-button v-on:click="clearSearch" class="md-dense md-raised">CLEAR</md-button>
 
-      <div id="filters">    
+      <div id="filters">
         <md-field id="sem-filter">
           <label for="sem">SEM</label>
           <md-select v-model="ssem" name="sem" id="sem">
@@ -25,7 +24,7 @@
             <md-option value="4">4</md-option>
           </md-select>
         </md-field>
-        
+
         <md-field id="branch-filter">
           <label for="branch">BRANCH</label>
           <md-select v-model="sbranch" name="branch" id="branch">
@@ -43,7 +42,6 @@
             <md-option value="0">NO</md-option>
           </md-select>
         </md-field>
-
       </div>
     </div>
 
@@ -101,8 +99,8 @@
               </md-card>
             </a>
           </div>
-        </div>-
-
+        </div>
+-
         <div v-if="product.other">
           <div class="md-layout-item" id="cards">
             <a :href="'/product/' + product.id">
@@ -137,7 +135,7 @@
 
     <!-- <div class="col-md-6">
       <router-view @refreshData="refreshList"></router-view>
-    </div> -->
+    </div>-->
   </div>
 </template>
  
@@ -148,7 +146,7 @@ export default {
   name: "products-list",
   data() {
     return {
-      stitle: "", 
+      stitle: "",
       ssem: "",
       sbranch: "",
       sdonation: "",
@@ -158,9 +156,17 @@ export default {
   methods: {
     /* eslint-disable no-console */
     retrieveProducts() {
-
       http
-        .get('/things?title='+this.stitle+'&sem='+this.ssem+'&branch='+this.sbranch+'&donation='+this.sdonation)
+        .get(
+          "/things?title=" +
+            this.stitle +
+            "&sem=" +
+            this.ssem +
+            "&branch=" +
+            this.sbranch +
+            "&donation=" +
+            this.sdonation
+        )
         .then(response => {
           this.products = response.data; // JSON are parsed automatically.
           console.log(response.data);
@@ -172,12 +178,12 @@ export default {
     refreshList() {
       this.retrieveProducts();
     },
-    clearSearch(){
-      this.stitle= "",
-      this.ssem= "",
-      this.sbranch= "",
-      this.sdonation= ""
-      this.retrieveProducts()
+    clearSearch() {
+      (this.stitle = ""),
+        (this.ssem = ""),
+        (this.sbranch = ""),
+        (this.sdonation = "");
+      this.retrieveProducts();
     }
   },
   mounted() {
@@ -187,14 +193,13 @@ export default {
 </script>
  
 <style>
-
-#search-bar{
+#search-bar {
   margin: auto;
   width: 50%;
   padding: 10px;
 }
 
-#filters{
+#filters {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
@@ -208,8 +213,7 @@ export default {
   margin: 20px;
 }
 
-#donation{
+#donation {
   float: right;
 }
-
 </style>
