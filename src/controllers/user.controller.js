@@ -181,7 +181,11 @@ exports.findOne = (req, res) => {
 
     User.findByPk(id)
         .then(data => {
-            res.send(data);
+            res.send({
+                email: data.dataValues.email,
+                id: data.dataValues.id,
+                name: data.dataValues.name
+            });
         })
         .catch(err => {
             res.status(500).send({
