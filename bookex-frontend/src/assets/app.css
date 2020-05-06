@@ -1,0 +1,62 @@
+html {
+    z-index: 2;
+    position: relative;
+}
+
+#app {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(20px, 1fr) minmax(200px, 960px) minmax(20px, 1fr);
+    grid-template-rows: 108px 500px auto 30px;
+    grid-gap: .2rem;
+}
+
+.search {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+    grid-template-rows: auto;
+}
+
+#logo {
+    font-size: calc(40px + (72 - 40) * ((100vw - 300px) / (1600 - 300)));
+    line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
+    text-align: center;
+}
+
+
+#logo-bg {
+    width: 100vw;
+    position: relative;
+    margin-left: -50vw;
+    height: 100px;
+    left: 50%;
+    box-sizing: border-box;
+    background: linear-gradient(45deg, rgba(48,255,117,1) 0%, rgba(49,211,255,1) 100%); 
+	background-size: 400% 400%;
+	-webkit-animation: gradientBG 15s ease infinite;
+	        animation: gradientBG 15s ease infinite;
+}
+
+@-webkit-keyframes gradientBG {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@keyframes gradientBG {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
