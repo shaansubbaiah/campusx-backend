@@ -62,7 +62,7 @@ exports.register = async (req, res) => {
         })
     }
     else {
-        res.status(500).send({
+        res.send({
             message: `Email has already registered.`
         });
     }
@@ -84,8 +84,8 @@ exports.login = (req, res) => {
         .then(data => {
             // if user with email doesnt exist 
             if (data == null) {
-                res.status(401).send({
-                    message: `Not Authorized`
+                res.send({
+                    message: `User not found..register to continue`
                 })
             }
 
@@ -117,8 +117,8 @@ exports.login = (req, res) => {
                         name: data.dataValues.name
                     })
                 }
-                res.status(401).send({
-                    message: `Not Authorized`
+                res.send({
+                    message: `Wrong Password`
                 })
             })
         })
