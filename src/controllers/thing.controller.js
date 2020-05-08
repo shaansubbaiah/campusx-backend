@@ -269,7 +269,7 @@ exports.update = async (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    // check if only owner of the thing is attempting to update it
+    // check if only owner of the thing is attempting to delete it
     const reqUserId = req.userData.id;
     Thing.findByPk(id)
         .then(data => {

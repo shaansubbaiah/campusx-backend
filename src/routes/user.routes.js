@@ -12,13 +12,13 @@ module.exports = app => {
     router.post('/login', users.login);
 
     // retrieve a single User's things by id
-    router.get("/:id/things", users.findUserThings);
+    router.get('/:id/things', users.findUserThings);
 
     // update User with id
-    router.put("/:id", users.update);
+    router.put('/:id', users.update);
 
     // delete User with id
-    router.delete("/:id", users.delete);
+    router.delete('/:id', users.delete);
 
     //
     //  Routes below have no use as of now
@@ -31,10 +31,10 @@ module.exports = app => {
     router.get('/', users.findAll);
 
     // retrieve a single User by id
-    router.get("/:id", users.findOne);
+    router.get('/:id', users.findOne);
 
     // delete all Users
-    router.delete("/", users.deleteAll);
+    router.delete('/', users.deleteAll);
 
     app.use('/api/users', router);
 };

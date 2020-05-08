@@ -1,12 +1,17 @@
 module.exports = (sequelize, Sequelize) => {
-    return sequelize.define("book", {
-        author: {
+    return sequelize.define("lostfound", {
+        // Sequelize also defines by default the fields id (primary key),
+        // createdAt and updatedAt to every model.
+        title: {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        publisher: {
+        description: {
             type: Sequelize.STRING,
             allowNull: false,
+        },
+        location: {
+            type: Sequelize.STRING,
         },
         phone: {
             type: Sequelize.BIGINT(10),
@@ -18,6 +23,5 @@ module.exports = (sequelize, Sequelize) => {
         image: {
             type: Sequelize.STRING,
         }
-    },
-        { timestamps: false });
+    });
 };

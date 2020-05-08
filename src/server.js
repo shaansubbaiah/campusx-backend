@@ -42,6 +42,7 @@ app.get('/', (req, res) => {
 
 require('./routes/thing.routes')(app);
 require('./routes/user.routes')(app);
+require('./routes/lostfound.routes')(app);
 
 // 404 on unhandled route
 app.use((req, res, next) => {

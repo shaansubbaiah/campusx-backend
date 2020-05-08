@@ -25,8 +25,9 @@ db.things = require('./thing.model')(sequelize, Sequelize);
 db.books = require('./book.model')(sequelize, Sequelize);
 db.others = require('./other.model')(sequelize, Sequelize);
 db.drives = require('./drive.model')(sequelize, Sequelize);
+db.lostfound = require('./lostfound.model')(sequelize, Sequelize);
 
-// define relations ;)
+// user - thing relations
 db.users.hasMany(db.things);
 db.things.belongsTo(db.users);
 
@@ -38,5 +39,9 @@ db.drives.belongsTo(db.things);
 
 db.things.hasOne(db.others);
 db.others.belongsTo(db.things);
+
+// user - lostfound relation
+db.users.hasMany(db.lostfound);
+db.lostfound.belongsTo(db.users);
 
 module.exports = db;
