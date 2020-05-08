@@ -15,12 +15,12 @@
 					"urlencoded": [
 						{
 							"key": "email",
-							"value": "a@b.com",
+							"value": "sss@s.com",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "apple",
+							"value": "12345678",
 							"type": "text"
 						},
 						{
@@ -55,12 +55,12 @@
 					"urlencoded": [
 						{
 							"key": "email",
-							"value": "a@b.com",
+							"value": "sss@s.com",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "apple",
+							"value": "12345678",
 							"type": "text"
 						}
 					]
@@ -386,6 +386,91 @@
 						"api",
 						"things",
 						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/lostfound/post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNzc0BzLmNvbSIsImlkIjoyLCJpYXQiOjE1ODg5MTk1MDksImV4cCI6MTU4OTAwNTkwOX0.L0i7fHpedWf4lWYwZjma6f1jBsi2QuR52834Ql7HZP0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "actual 2nd ID",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "name is blurred, usn 1bm18cs099",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "1234567890",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/shaan/Downloads/4~2.png"
+						},
+						{
+							"key": "location",
+							"value": "2nd floor new building",
+							"type": "text"
+						},
+						{
+							"key": "userId",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/api/lostfound/post",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lostfound",
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/lostfound/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/lostfound/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lostfound",
+						"all"
 					]
 				}
 			},
