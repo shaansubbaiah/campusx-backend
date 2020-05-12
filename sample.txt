@@ -1,7 +1,7 @@
 # create mysql db
-create database testdb;
-create user root with password '12345678';
-grant all privileges on testdb.* to root;
+create database labdb;
+create user root identified by 'labpassword';
+grant all privileges on labdb.* to labuser;
 flush privileges;
 
 
