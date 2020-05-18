@@ -20,13 +20,6 @@ module.exports = app => {
     // delete User with id
     router.delete('/:id', checkAuth, users.delete);
 
-    //
-    //  Routes below have no use as of now
-    //
-
-    // // create a new User
-    // router.post('/', users.create);
-
     // retrieve all Users
     router.get('/', users.findAll);
 

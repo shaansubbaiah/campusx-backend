@@ -130,38 +130,6 @@ exports.login = (req, res) => {
 
 };
 
-
-// // create and save a new User
-// exports.create = (req, res) => {
-//     if (!req.body.gtoken || !req.body.name || !req.body.email || !req.body.phone) {
-//         res.status(400).send({
-//             message: 'Content can\'t be empty!'
-//         });
-//         return;
-//     }
-
-//     // create User
-//     const user = {
-//         name: req.body.name,
-//         gtoken: req.body.gtoken,
-//         email: req.body.email,
-//         phone: req.body.phone
-//     };
-
-//     // save User in db
-//     User.create(user)
-//         .then(data => {
-//             res.status(201).send({
-//                 message: `User registered successfully.`
-//             });
-//         })
-//         .catch(err => {
-//             res.status(500).send({
-//                 message: err.message || `Error registering the User.`
-//             });
-//         });
-// };
-
 // retrieve all Users from db
 exports.findAll = (req, res) => {
     User.findAll()
@@ -254,7 +222,6 @@ exports.update = async (req, res) => {
                     message: err.message || `Could not find user`
                 })
             })
-
 
         // if user with email doesnt exist 
         if (data == null) {
