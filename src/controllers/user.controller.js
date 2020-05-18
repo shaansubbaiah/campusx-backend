@@ -215,29 +215,76 @@ exports.findUserThings = (req, res) => {
 }
 
 // update a User by id in request
-exports.update = (req, res) => {
-    const id = req.params.id;
+exports.update = async (req, res) => {
+    // update data of user whose token is provided
+    const reqUserId = req.userData.id;
 
-    // 
-
-    User.update(req.body, { where: { id: id } })
-        .then(num => {
-            if (num == 1) {
-                res.send({
-                    message: `User id:${id} updated successfully`
-                });
-            } else {
-                res.send({
-                    message: `Cannot update User with id:${id}. Not found or req.body empty!`
-                });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: `Error updating User id:${id}`
-            });
+    // check for pass(required) and name, email, newpass (atleast one)
+    if ((!req.body.name && !req.body.email && !req.body.newpass) && !req.body.pass) {
+        res.status(400).send({
+            message: 'Content can\'t be empty!'
         });
+        return;
+    }
+    else {
+        let newUserInfo = {};
 
+        if (req.body.name)
+            newUserInfo.name = req.body.name;
+        if (req.body.email)
+            newUserInfo.email = req.body.email;
+        if (req.body.newpass) {
+            bcrypt.hash(req.body.newpass, 10, (err, hash) => {
+                if (err) {
+                    return res.status(500).send({
+                        message: err.message || `Error occurred hashing password.`
+                    })
+                }
+                else {
+                    newUserInfo.password = hash;
+                }
+            })
+        }
+
+        console.log(newUserInfo);
+
+        let data = await User.findOne({ where: { email: req.userData.email } })
+            .catch(err => {
+                res.status(500).send({
+                    message: err.message || `Could not find user`
+                })
+            })
+
+
+        // if user with email doesnt exist 
+        if (data == null) {
+            res.status(500).send({
+                message: `User not found..register to continue`
+            })
+        }
+
+        // check if password provided matches password in token
+        let allValid = await bcrypt.compare(req.body.pass, data.dataValues.password);
+
+        if (!allValid) {
+            res.status(401).send({
+                message: `Not Authorized`
+            })
+        }
+        else {
+            // password matches, update info
+            await User.update(newUserInfo, { where: { id: reqUserId } })
+                .catch(err => {
+                    res.status(500).send({
+                        message: `Error updating User id:${reqUserId}`
+                    });
+                });
+
+            res.send({
+                message: `User id:${reqUserId} updated successfully`
+            });
+        }
+    }
 };
 
 // delete a User by id in request

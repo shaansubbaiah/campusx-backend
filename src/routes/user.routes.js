@@ -15,10 +15,10 @@ module.exports = app => {
     router.get('/:id/things', users.findUserThings);
 
     // update User with id
-    router.put('/:id', users.update);
+    router.put('/:id', checkAuth, users.update);
 
     // delete User with id
-    router.delete('/:id', users.delete);
+    router.delete('/:id', checkAuth, users.delete);
 
     //
     //  Routes below have no use as of now
