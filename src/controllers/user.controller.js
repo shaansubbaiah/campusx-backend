@@ -216,6 +216,24 @@ exports.update = async (req, res) => {
 
         console.log(newUserInfo);
 
+        // check if new email is already used
+        if (req.body.email) {
+            let emailExists = await User.findOne({ where: { email: req.body.email } })
+                .catch(err => {
+                    res.status(500).send({
+                        message: err.message
+                    })
+                })
+
+            if (emailExists != null) {
+                res.status(500).send({
+                    message: `Mail already used, try another email`
+                })
+                return;
+            }
+        }
+
+        // get data from db of user with email = email in token
         let data = await User.findOne({ where: { email: req.userData.email } })
             .catch(err => {
                 res.status(500).send({
@@ -223,11 +241,12 @@ exports.update = async (req, res) => {
                 })
             })
 
-        // if user with email doesnt exist 
+        // if user with email procided doesnt exist 
         if (data == null) {
             res.status(500).send({
-                message: `User not found..register to continue`
+                message: `User not found, register to continue`
             })
+            return;
         }
 
         // check if password provided matches password in token
