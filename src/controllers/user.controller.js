@@ -226,7 +226,7 @@ exports.update = async (req, res) => {
                 })
 
             if (emailExists != null) {
-                res.status(500).send({
+                res.send({
                     message: `Mail already used, try another email`
                 })
                 return;
@@ -253,8 +253,8 @@ exports.update = async (req, res) => {
         let allValid = await bcrypt.compare(req.body.pass, data.dataValues.password);
 
         if (!allValid) {
-            res.status(401).send({
-                message: `Not Authorized`
+            res.send({
+                message: `Wrong old password`
             })
         }
         else {
@@ -267,7 +267,7 @@ exports.update = async (req, res) => {
                 });
 
             res.send({
-                message: `User id:${reqUserId} updated successfully`
+                message: `User updated successfully`
             });
         }
     }
