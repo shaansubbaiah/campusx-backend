@@ -250,7 +250,7 @@ exports.update = async (req, res) => {
         .then(num => {
             if (num == 1 && n == 1) {
                 res.send({
-                    message: `Thing id:${id} updated successfully`
+                    message: `Product updated successfully!`
                 });
             } else {
                 res.send({
@@ -289,7 +289,7 @@ exports.delete = (req, res) => {
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: `Thing id:${id} deleted successfully`
+                    message: `Product deleted successfully`
                 });
             } else {
                 res.send({
