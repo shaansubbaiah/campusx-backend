@@ -22,11 +22,13 @@ exports.postLF = async (req, res) => {
     // save lostfound in db
     LostFound.create(lostfound)
         .then(data => {
-            res.send(data);
+            res.send({
+                message: "Lost&found added successfully"
+            })
         })
         .catch(err => {
-            res.status(500).send({
-                message: err.message || `Error occurred while creating lostfound.`
+            res.send({
+                message: `Error occurred while creating lostfound.`
             });
         });
 };

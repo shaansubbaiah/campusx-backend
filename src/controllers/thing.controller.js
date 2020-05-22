@@ -8,7 +8,6 @@ const Op = db.Sequelize.Op;
 // create and save a new Thing
 createThing = async (req, res) => {
     if (!req.body.title || !req.body.branch || !req.body.sem) {
-        console.log('here');
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -28,11 +27,14 @@ createThing = async (req, res) => {
     // save Thing in db
     await Thing.create(thing)
         .then(data => {
+            res.send({
+                message: "Product added successfully"
+            })
             id = data.id;
         })
         .catch(err => {
-            res.status(500).send({
-                message: err.message || `Error occurred while creating the Thing.`
+            res.send({
+                message: `Error occurred while creating the Thing.`
             });
         });
 
@@ -102,7 +104,6 @@ exports.createBook = async (req, res) => {
 // create and  save a new Drive
 exports.createDrive = async (req, res) => {
     if (!req.body.url || !req.body.description) {
-        console.log(req.body);
         res.status(400).send({
             message: 'Content can\'t be empty!'
         });
@@ -250,7 +251,7 @@ exports.update = async (req, res) => {
         .then(num => {
             if (num == 1 && n == 1) {
                 res.send({
-                    message: `Product updated successfully!`
+                    message: `Product updated successfully`
                 });
             } else {
                 res.send({
