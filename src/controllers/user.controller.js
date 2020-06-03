@@ -85,8 +85,9 @@ exports.login = (req, res) => {
             // if user with email doesnt exist 
             if (data == null) {
                 res.send({
-                    message: `User not found..register to continue`
+                    message: `User not found, register to continue.`
                 })
+                return;
             }
 
             // else check password
@@ -95,6 +96,7 @@ exports.login = (req, res) => {
                     res.status(401).send({
                         message: `Not Authorized`
                     })
+                    return;
                 }
                 // password matches, create JWT token
                 if (result) {
