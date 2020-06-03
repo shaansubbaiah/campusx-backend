@@ -9,6 +9,7 @@ const Thing = db.things;
 const Book = db.books;
 const Drive = db.drives;
 const Other = db.others;
+const LostFound = db.lostfound;
 
 // user register
 exports.register = async (req, res) => {
@@ -180,6 +181,21 @@ exports.findUserThings = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message: err.message || `Error occurred while searching User's things.`
+            });
+        });
+}
+
+// find all lost founds from user but id
+exports.findUserLostfounds = (req, res) => {
+    const id = req.params.id;
+
+    LostFound.findAll({ where: { userId: id } })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || `Error occurred while getting User's LostnFound items.`
             });
         });
 }

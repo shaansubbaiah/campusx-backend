@@ -14,6 +14,9 @@ module.exports = app => {
     // retrieve a single User's things by id
     router.get('/:id/things', users.findUserThings);
 
+    // retrieve a single User's lostfounds by id
+    router.get('/:id/lostfounds', users.findUserLostfounds);
+
     // update User with id
     router.put('/:id', checkAuth, users.update);
 
