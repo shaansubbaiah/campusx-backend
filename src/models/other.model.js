@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
         },
         phone: {
-            type: Sequelize.BIGINT(10),
+            type: Sequelize.STRING,
             allowNull: false,
             validate: {
                 is: /^(\+91( )?)?[0-9]{10}$/g,
