@@ -61,9 +61,8 @@ updateModel = async (req, res) => {
             res.status(500).send({
                 message: `Error updating Model id:${id}`
             });
+            return;
         });
-
-    return n;
 }
 
 // create and  save a new Book
@@ -227,27 +226,32 @@ exports.update = async (req, res) => {
 
     // check if only owner of the thing is attempting to update it
     const reqUserId = req.userData.id;
-    Thing.findByPk(id)
+
+    await Thing.findByPk(id)
         .then(data => {
             if (data.dataValues.userId != reqUserId) {
                 res.status(401).send({
                     message: `Not Authorized`
                 })
+                return;
             }
         })
         .catch(err => {
             res.status(500).send({
                 message: err.message || `Error retrieving Thing with id:${id}`
             })
+            return;
         })
 
     // updates Child specific data first
-    let n = await updateModel(req, res);
+    await updateModel(req, res);
 
     // update Thing specific data
     Thing.update(req.body, { where: { id: id } })
         .then(num => {
-            if (num == 1 && n == 1) {
+            console.log(`num = ${num}`);
+
+            if (num == 1) {
                 res.send({
                     message: `Thing id:${id} updated successfully`
                 });
