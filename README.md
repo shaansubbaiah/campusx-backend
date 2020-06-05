@@ -17,7 +17,6 @@ To get the Node server running locally:
 
 ### Dependencies
 - [expressjs](https://github.com/expressjs/express) - The server for handling and routing HTTP requests
-MongoDB data to javascript 
 - [sequelize](https://github.com/sequelize/sequelize) - Modelling and handling SQL commands
 - [mysql2](https://github.com/sidorares/node-mysql2) - MySQL client for NodeJS
 
