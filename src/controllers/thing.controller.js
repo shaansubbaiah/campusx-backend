@@ -88,11 +88,14 @@ exports.createBook = async (req, res) => {
     // save Book in db
     Book.create(book)
         .then(data => {
-            res.send(data);
+            res.send({
+                data,
+                message: 'Book added successfully!'
+            });
         })
         .catch(err => {
-            res.status(500).send({
-                message: err.message || `Error occurred while creating Book.`
+            res.send({
+                message: `Error occurred while creating Book.`
             });
         });
 }
@@ -122,11 +125,14 @@ exports.createDrive = async (req, res) => {
     // save Drive in db
     Drive.create(drive)
         .then(data => {
-            res.send(data);
+            res.send({
+                data,
+                message: 'Link added successfully!'
+            });
         })
         .catch(err => {
-            res.status(500).send({
-                message: err.message || `Error occurred while creating Drive.`
+            res.send({
+                message: `Error occurred while creating Drive.`
             });
         });
 }
@@ -153,11 +159,14 @@ exports.createOther = async (req, res) => {
     // save Other in db
     Other.create(other)
         .then(data => {
-            res.send(data);
+            res.send({
+                data,
+                message: 'Product added successfully!'
+            });
         })
         .catch(err => {
-            res.status(500).send({
-                message: err.message || `Error occurred while creating Other.`
+            res.send({
+                message: `Error occurred while creating Other.`
             });
         });
 }
@@ -253,11 +262,11 @@ exports.update = async (req, res) => {
 
             if (num == 1) {
                 res.send({
-                    message: `Thing id:${id} updated successfully`
+                    message: `Product updated successfully`
                 });
             } else {
                 res.send({
-                    message: `Cannot update Thing with id:${id}. Not found or req.body empty!`
+                    message: `Error occured while updating!`
                 });
             }
         })
@@ -296,7 +305,7 @@ exports.delete = (req, res) => {
                 });
             } else {
                 res.send({
-                    message: `Cannot delete Thing id:${id}. Maybe it was not found!`
+                    message: `Cannot delete Product. Maybe it was not found!`
                 });
             }
         })

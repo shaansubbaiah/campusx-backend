@@ -23,6 +23,7 @@ exports.postLF = async (req, res) => {
     LostFound.create(lostfound)
         .then(data => {
             res.send({
+                data,
                 message: "Lost&found added successfully"
             })
         })
