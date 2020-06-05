@@ -1,5 +1,5 @@
 {
-  "name": "bookex-backend",
+  "name": "campusx-backend",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shaansubbaiah/bookex-backend.git"
+    "url": "git+https://github.com/shaansubbaiah/compusx-backend.git"
   },
-  "author": "",
+  "author": "Shaan Subbaiah, Rushali Shetty, Samrudhi M",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/shaansubbaiah/bookex-backend/issues"
+    "url": "https://github.com/shaansubbaiah/campusx-backend/issues"
   },
-  "homepage": "https://github.com/shaansubbaiah/bookex-backend#readme",
+  "homepage": "https://github.com/shaansubbaiah/campusx-backend#readme",
   "dependencies": {
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",

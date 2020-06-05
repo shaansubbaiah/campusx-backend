@@ -1,37 +1,39 @@
-> ### REST API implemented using NodeJS + MySQL
+# CampusX - REST API
 
-
-# Getting started
+---
+## Getting started
 To get the Node server running locally:
 - Clone this repo
 - `npm install` to install all required dependencies
-- Install MySQL and edit the database config at _src/config/db.config.js_
+- Install MySQL and edit the database config at `src/config/db.config.js`
+- Configure the JWT secret key at `src/config/api.config.js`
 - `npm start` to start the local server
 
 >`node src/index.js c` or `npm startc` to delete all tables before running.
 >`node src/server.js` or `npm start` to continue with existing tables before running.
 
+---
+## Code Overview
 
-# Code Overview
-
-
-## Dependencies
+### Dependencies
 - [expressjs](https://github.com/expressjs/express) - The server for handling and routing HTTP requests
 MongoDB data to javascript 
 - [sequelize](https://github.com/sequelize/sequelize) - Modelling and handling SQL commands
 - [mysql2](https://github.com/sidorares/node-mysql2) - MySQL client for NodeJS
 
 
-## Application Structure
+### Application Structure
 - `server.js` - The entry point to the application. Defines our express server and connects it to MySQL using Sequelize. It also requires the routes and models that will be used.
-- `config/` - Contains configuration for the database.
-- `routes/` - Contains the route definitions for our API.
-- `models/` - Contains the schema definitions for our Sequelize models.
-- `controllers/` - Contains contoller functions as specified in the routes.
+- `config/` - Configuration for the database.
+- `routes/` - Route definitions for our API.
+- `models/` - Schema definitions for our Sequelize models.
+- `controllers/` - Contoller functions as specified in the routes.
+- `middleware/` - Handles JWT authentication and image uploads.
 
-# API Spec
+---
+## API Spec (Documentation is WIP)
 
-## JSON Objects returned by API:
+### JSON Objects returned by API:
 **api/users/1** - returns user json of specified **id**
 ```json
 {

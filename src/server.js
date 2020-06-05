@@ -37,7 +37,7 @@ else {
 
 // routes
 app.get('/', (req, res) => {
-    res.json({ message: "Welcome to the app :)" })
+    res.json({ message: "This is the CampusX REST API :)" })
 });
 
 require('./routes/thing.routes')(app);
