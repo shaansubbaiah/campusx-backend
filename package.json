@@ -12,8 +12,8 @@
     "type": "git",
     "url": "git+https://github.com/shaansubbaiah/compusx-backend.git"
   },
-  "author": "Shaan Subbaiah, Rushali Shetty, Samrudhi M",
-  "license": "ISC",
+  "author": "Shaan Subbaiah <shaansubbaiah@yahoo.com>, Rushali Shetty, Samrudhi M",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/shaansubbaiah/campusx-backend/issues"
   },
